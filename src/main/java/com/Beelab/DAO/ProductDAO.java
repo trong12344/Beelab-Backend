@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.Beelab.Entity.Product;
 
 public interface ProductDAO extends JpaRepository<Product, Integer> {
-	@Query("SELECT p FROM Product p WHERE p.category.id=?1")
+	@Query("SELECT p FROM product p WHERE p.category_id=?1")
 	List<Product> findByCategoryId(String cid);
 }
