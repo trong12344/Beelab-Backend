@@ -1,8 +1,5 @@
 package com.Beelab.Entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,41 +10,52 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+import com.Beelab.Entity.ProductDetail;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "product")
-public class Product implements Serializable {
+public class Product {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	int supplier_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	String name;
-	String description;
-	Double amount;
-	String code;
-	int status;
-	
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "createAt")
-	Date createAt = new Date();
-	Boolean available;
+    @Column(name = "supplier_id", columnDefinition = "INT DEFAULT 0")
+    private int supplierId;
+
+    @Column(name = "name", columnDefinition = "VARCHAR DEFAULT ''")
+    private String name;
+
+    @Column(name = "code", columnDefinition = "VARCHAR DEFAULT ''")
+    private String code;
+
+    @Column(name = "description", columnDefinition = "VARCHAR DEFAULT ''")
+    private String description;
+
+    @Column(name = "amount", columnDefinition = "INT DEFAULT 0")
+    private int amount;
+
+    @Column(name = "discount_percent", columnDefinition = "INT DEFAULT 0")
+    private int discountPercent;
+
+    @Column(name = "status", columnDefinition = "INT DEFAULT 0")
+    private int status;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	Category category;
-
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	List<OrderDetail> orderDetails;
+	private List<ProductDetail> ProductDetail;
+
+    
 }
+

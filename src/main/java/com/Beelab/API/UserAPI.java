@@ -10,24 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Beelab.Entity.Account;
-import com.Beelab.Service.AccountService;
+import com.Beelab.Entity.User;
+import com.Beelab.Service.UserService;
 
 
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/rest/accounts")
-public class AccountAPI {
+@RequestMapping("/accounts")
+public class UserAPI {
 
-	@Autowired
-	AccountService accountService;
-
-	@GetMapping
-	public List<Account> getAccounts(@RequestParam("admin") Optional<Boolean> admin) {
-		if (admin.orElse(false)) {
-			return accountService.getAdministrators();
-		}
-		return accountService.findAll();
-	}
+//	@Autowired
+//	UserService accountService;
+//
+////	@GetMapping
+////	public List<User> getAccounts(@RequestParam("admin") Optional<Boolean> admin) {
+////		if (admin.orElse(false)) {
+////			return accountService.getAdministrators();
+////		}
+////		return accountService.findAll();
+////	}
+////	
 }

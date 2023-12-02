@@ -1,6 +1,5 @@
 package com.Beelab.Entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -11,37 +10,35 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta	.persistence.Table;
+import jakarta.persistence.Table;
+import lombok.Data;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.Data;
 
-@SuppressWarnings("serial")
 @Data
 @Entity
-@Table(name = "order_detail_bill")
-public class OrderDetail implements Serializable {
+@Table(name = "voucher")
+public class Voucher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @Column(nullable = false)
+    private String code;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int discount_amount;
 
     @Column(nullable = false)
-    private int quantity;
+    private String description;
 
     @Column(nullable = false)
     private int status;
 
-    @ManyToOne
-    @JoinColumn(name = "product_detail_id", nullable = false)
-    private ProductDetail productDetail;
+    @Column(nullable = false)
+    private int type;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -51,11 +48,12 @@ public class OrderDetail implements Serializable {
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updated_at;
 
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Admin staff;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "expired_at", nullable = false)
+    private Date expired_at;
+    
+    @JsonIgnore
+	@OneToMany(mappedBy = "voucher")
+	List<OrderDetail> OrderDetail;
 
-    @ManyToOne
-    @JoinColumn(name = "voucher_id", nullable = false)
-    private Voucher voucher;
 }

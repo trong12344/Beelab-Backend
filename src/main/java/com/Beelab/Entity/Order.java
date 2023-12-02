@@ -24,24 +24,29 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {
-
+public class Order {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	String user_fullname;
-	int user_phoneNumber;
-	String user_email;
-	String address;
-	boolean status;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "Create_at")
-	Date createDate = new Date();
+	private int id;
+
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
+    private String address;
+
+    @Column(name = "status", columnDefinition = "INT DEFAULT 1")
+    private int status;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date created_at;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date updated_at;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	Account account;
+	User account;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
