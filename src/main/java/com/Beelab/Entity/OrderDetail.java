@@ -18,10 +18,15 @@ import jakarta	.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 @SuppressWarnings("serial")
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "order_detail_bill")
 public class OrderDetail implements Serializable {
 

@@ -1,5 +1,8 @@
 package com.Beelab.Entity;
 
+import lombok.AllArgsConstructor;
+
+import lombok.NoArgsConstructor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +16,12 @@ import java.util.Date;
 import java.util.List;
 import com.Beelab.Entity.ProductDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "size")
 public class Size {
 

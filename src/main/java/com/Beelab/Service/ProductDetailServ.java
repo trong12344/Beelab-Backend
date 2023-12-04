@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.Beelab.Entity.ProductDetail;
 public interface ProductDetailServ {
 	
-	public 	List<ProductDetail>  getProductDetail(Integer cid);
+	public List<ProductDetail>  getProductDetail(Integer cid);
+	
+	public ProductDetail createProductDetail(ProductDetail productDetail);
 	
 }

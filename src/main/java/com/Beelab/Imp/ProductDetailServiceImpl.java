@@ -21,6 +21,12 @@ public class ProductDetailServiceImpl implements ProductDetailServ{
 		return pddao.getProductDetail(cid);
 	}
 
+	@Override
+	public ProductDetail createProductDetail(ProductDetail productDetail) {
+		
+		return null;
+	}
+
 
 	
 	

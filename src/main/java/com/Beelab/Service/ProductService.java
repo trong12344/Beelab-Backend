@@ -19,5 +19,7 @@ public interface ProductService {
 
 	public void delete(Integer id);
 	
+	public List<Product> findBySupplierId(Integer cid);
+	
 	
 }

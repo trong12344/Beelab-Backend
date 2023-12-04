@@ -4,8 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "comment")
 public class Comment {
 

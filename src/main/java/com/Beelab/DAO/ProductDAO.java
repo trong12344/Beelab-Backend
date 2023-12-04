@@ -19,6 +19,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	  @Transactional
 	  @Modifying
 	  @Query("UPDATE Product p SET p.status = 0 WHERE p.status = 1")
-	   public void updateStatusToZero();
+	  public void updateStatusToZero();
 	
 }

@@ -44,6 +44,12 @@ public class ProductServiceImpl implements ProductService{
 		pdao.updateStatusToZero();
 	}
 
+	@Override
+	public List<Product> findBySupplierId(Integer cid) {
+	
+		return null;
+	}
+
 
 	
 

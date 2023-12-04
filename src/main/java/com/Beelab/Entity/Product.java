@@ -16,9 +16,14 @@ import java.util.Date;
 import java.util.List;
 import com.Beelab.Entity.ProductDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @SuppressWarnings("serial")
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
 
@@ -39,8 +44,8 @@ public class Product {
     @Column(name = "description", columnDefinition = "VARCHAR DEFAULT ''")
     private String description;
 
-    @Column(name = "amount", columnDefinition = "INT DEFAULT 0")
-    private int amount;
+    @Column(name = "amount")
+    private double amount;
 
     @Column(name = "discount_percent", columnDefinition = "INT DEFAULT 0")
     private int discountPercent;

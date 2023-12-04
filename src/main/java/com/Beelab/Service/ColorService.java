@@ -6,13 +6,13 @@ import com.Beelab.Entity.Color;
 
 public interface ColorService {
 	
-   public Color createColor(Color createColorDTO);
+   public Color createColor(Color color);
 
-   public Color updateColor(Long id, Color updateColorDTO);
+   public Color updateColor(Color color);
 
    public List<Color> getListColor();
 
    public Color findOneById(Long id);
 
-   public void update(Color color);
+
 }

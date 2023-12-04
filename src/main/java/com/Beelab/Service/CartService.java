@@ -9,14 +9,14 @@ import com.Beelab.Entity.Cart;
 
 @Service
 public interface CartService {
-    Cart createCart(int userId, Cart createCartDTO);
+   public Cart createCart(Cart Cart);
     
-    Cart deleteCartByProductId(int userId, int productId);
+   public Cart deleteCartByProductId(int userId, int productId);
     
-    List<Cart> getListCartByUser(int userId);
+   public List<Cart> getListCartByUser(int userId);
     
-    Cart findOneById(int id);
+   public Cart findOneById(int id);
     
-    Cart update(Cart cart);
+   public Cart update(Cart cart);
 }
 

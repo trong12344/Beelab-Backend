@@ -5,13 +5,14 @@ import java.util.List;
 import com.Beelab.Entity.Size;
 
 public interface SizeService {
-    Size createSize(Size createSizeDTO);
+   public Size createSize(Size size);
     
-    Size updateSize(int id, Size updateSizeDTO);
+   public Size updateSize(int id);
     
-    List<Size> getListSize(String keySearch, int status);
+   public List<Size> getListSize();
     
-    Size findOneById(int id);
+   public Size findOneById(int id);
+   
+   public Size findOneByName(String name);
     
-    Size update(Size size);
 }

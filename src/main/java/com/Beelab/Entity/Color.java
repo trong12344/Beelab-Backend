@@ -11,8 +11,13 @@ import java.util.Date;
 import java.util.List;
 import com.Beelab.Entity.ProductDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "color")
 public class Color {
 

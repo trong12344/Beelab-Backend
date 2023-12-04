@@ -1,7 +1,9 @@
 package com.Beelab.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "admin")
 public class Admin {
 

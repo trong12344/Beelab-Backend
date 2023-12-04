@@ -3,6 +3,7 @@ package com.Beelab.Service;
 import com.Beelab.Entity.Admin;
 
 public interface AdminService {
+	
 		public Admin createAdmin(Admin admin);
 
 		public Admin changePassword();

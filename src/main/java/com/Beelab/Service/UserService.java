@@ -8,13 +8,15 @@ import com.Beelab.Entity.User;
 
 public interface UserService {
 
+	public List<User> getAllUser();
+	
    public User create(User user);
 
-   public User changePassword(User userChangePasswordDTO, int userId);
+   public User changePassword(int userId);
 
    public void transportEmail(String email, String verifyCode);
 
-//    User verifyCode(UserVerifyCodeDTO userVerifyCodeDTO);
+   User verifyCode();
 
    public User findOneById(int id);
 
@@ -24,5 +26,5 @@ public interface UserService {
 
    public User findOneByGmail(String email);
 
-   public void update(User user);
+   public User update(User user);
 }

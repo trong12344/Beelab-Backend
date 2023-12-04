@@ -1,12 +1,17 @@
 package com.Beelab.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cart")
 public class Cart {
 
@@ -20,20 +25,16 @@ public class Cart {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int status;
 
-    @Column(nullable = false, columnDefinition = "timestamp default current_timestamp")
-    private Date createdAt;
+    private LocalDateTime  createdAt;
 
-    @Column(nullable = false, columnDefinition = "timestamp default current_timestamp on update current_timestamp")
-    private Date updatedAt;
-    
+    private LocalDateTime  updatedAt;
     
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
-    
+    User user;   
     
     @ManyToOne
-    @JoinColumn(name = "product_detail_id")
+    @JoinColumn(name = "product_detail_id", nullable = false)
     ProductDetail ProductDetail;
 
 }
