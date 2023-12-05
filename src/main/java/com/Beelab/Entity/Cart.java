@@ -25,9 +25,11 @@ public class Cart {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int status;
 
-    private LocalDateTime  createdAt;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime created_at;
 
-    private LocalDateTime  updatedAt;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private LocalDateTime updated_at;
     
     @ManyToOne
     @JoinColumn(name = "user_id")

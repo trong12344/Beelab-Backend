@@ -27,7 +27,12 @@ public class CartAPI {
 	
 	@GetMapping("{id}")
 	public List<Cart> getAllCartByUser(@PathVariable int id){
-		return cartService.getListCartByUser(id);
+		return cartService.getAllCartByUser(id);
+	}
+	
+	@GetMapping("/current/{id}")
+	public List<Cart> getCurrentCartByUser(@PathVariable int id){
+		return cartService.getCurrentCartByUser(id);
 	}
 	
 	

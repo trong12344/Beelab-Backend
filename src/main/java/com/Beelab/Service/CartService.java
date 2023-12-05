@@ -12,8 +12,10 @@ public interface CartService {
    public Cart createCart(Cart Cart);
     
    public Cart deleteCartByProductId(int userId, int productId);
+   
+   public List<Cart> getCurrentCartByUser(int userId);
     
-   public List<Cart> getListCartByUser(int userId);
+   public List<Cart> getAllCartByUser(int userId);
     
    public Cart findOneById(int id);
     
