@@ -12,7 +12,7 @@ public interface ColorService {
 
    public List<Color> getListColor();
 
-   public Color findOneById(Long id);
+   public Color findOneById(int id);
 
 
 }

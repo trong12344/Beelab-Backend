@@ -46,8 +46,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<Product> findBySupplierId(Integer cid) {
-	
-		return null;
+		return pdao.findBySupplierId(cid);
 	}
 
 

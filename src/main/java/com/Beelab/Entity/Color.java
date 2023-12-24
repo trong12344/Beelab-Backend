@@ -34,6 +34,4 @@ public class Color {
     @OneToMany(mappedBy = "color")
     @JsonIgnore
     private List<ProductDetail> ProductDetail;
-
-    
 }

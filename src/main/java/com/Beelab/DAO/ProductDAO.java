@@ -16,6 +16,9 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	List<Product> findByCategoryId(Integer cid);
 	
 	
+	@Query("SELECT p FROM Product p WHERE p.supplier.id=?1")
+	List<Product> findBySupplierId(Integer cid);
+	
 	  @Transactional
 	  @Modifying
 	  @Query("UPDATE Product p SET p.status = 0 WHERE p.status = 1")

@@ -23,13 +23,8 @@ public class ProductDetailServiceImpl implements ProductDetailServ{
 
 	@Override
 	public ProductDetail createProductDetail(ProductDetail productDetail) {
-		
-		return null;
+		return pddao.save(productDetail);
 	}
 
-
-	
-	
-	
 	
 }

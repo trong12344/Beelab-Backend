@@ -24,10 +24,8 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public Cart deleteCartByProductId(int userId, int productId) {
-		
-		return null;
+		return cartDAO.deleteCartByProductId(userId, productId);
 	}
-
 	@Override
 	public List<Cart> getAllCartByUser(int userId) {
 		return cartDAO.getAllcartByUserId(userId);
@@ -36,13 +34,13 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public Cart findOneById(int id) {
 		
-		return null;
+		return cartDAO .findById(id).get();
 	}
 
 	@Override
 	public Cart update(Cart cart) {
 		
-		return null;
+		return cartDAO .save(cart);
 	}
 
 	@Override
@@ -51,11 +49,9 @@ public class CartServiceImpl implements CartService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateString = localDateTime.format(formatter);
         LocalDateTime date1 = LocalDateTime.parse(dateString, formatter);
-				
+	
 		
 		LocalDateTime date = LocalDateTime.now();
-		
-				
 		
 		return cartDAO.getCurrentCartByUser(userId,date1);
 	}

@@ -65,4 +65,6 @@ public class ProductAPI {
 	public List<Product> findByCategoryId(@PathVariable("id") Integer id) {
 		return productService.findByCategoryId(id);
 	}
+	
+	
 }

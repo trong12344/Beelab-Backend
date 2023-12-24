@@ -11,8 +11,8 @@ public interface CommentService {
 
 	  	public Comment getDetailComment(int commentId);
 
-	  	public Comment deleteCommentByAdmin(int commentId);
-
+	  	//public Comment deleteCommentByAdmin(int commentId);
+//
 	  	public Comment findOneById(int id);
 
 	  	public void update(Comment comment);
