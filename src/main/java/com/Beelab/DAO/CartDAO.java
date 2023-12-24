@@ -14,9 +14,7 @@ import com.Beelab.Entity.Cart;
 public interface CartDAO extends JpaRepository<Cart, Integer> {
 	@Query("SELECT p FROM Cart p WHERE p.user.id=?1")
 	List<Cart> getAllcartByUserId(int cid);
-	
-	
-	
+
 	@Transactional
     @Modifying
     @Query("DELETE FROM Cart c WHERE c.user.id = :userId AND c.product.id = :productId")
