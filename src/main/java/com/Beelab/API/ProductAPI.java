@@ -14,44 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Beelab.Entity.Product;
-<<<<<<< HEAD
 import com.Beelab.Entity.ProductDetail;
 import com.Beelab.Service.ProductDetailServ;
-=======
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 import com.Beelab.Service.ProductService;
 
 
 
 @CrossOrigin("*")
 @RestController
-<<<<<<< HEAD
 @RequestMapping("/products")
-=======
-@RequestMapping("/rest/products")
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 public class ProductAPI {
 	@Autowired
 	ProductService productService;
 
-<<<<<<< HEAD
 	@Autowired
 	ProductDetailServ ProductDetailServ;
 
 	
-=======
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 	@GetMapping()
 	public List<Product> getAll() {
 		return productService.findAll();
 	}
 
 	@GetMapping("{id}")
-<<<<<<< HEAD
 	public Product getById(@PathVariable("id") Integer id) {
-=======
-	public Product getOne(@PathVariable("id") Integer id) {
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 		return productService.findById(id);
 	}
 
@@ -66,7 +52,6 @@ public class ProductAPI {
 	}
 
 	@DeleteMapping("{id}")
-<<<<<<< HEAD
 	public void delete(@PathVariable("id") Integer id) {	
 		productService.delete(id);
 	}
@@ -82,9 +67,4 @@ public class ProductAPI {
 	}
 	
 	
-=======
-	public void delete(@PathVariable("id") Integer id) {
-		productService.delete(id);
-	}
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 }

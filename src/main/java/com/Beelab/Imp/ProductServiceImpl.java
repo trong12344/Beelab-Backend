@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.ProductDAO;
 import com.Beelab.Entity.Product;
-<<<<<<< HEAD
 import com.Beelab.Entity.ProductDetail;
-=======
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 import com.Beelab.Service.ProductService;
 
 @Service
@@ -29,11 +26,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public List<Product> findByCategoryId(Integer cid) {
-=======
-	public List<Product> findByCategoryId(String cid) {
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 		return pdao.findByCategoryId(cid);
 	}
 
@@ -48,7 +41,6 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void delete(Integer id) {
-<<<<<<< HEAD
 		pdao.updateStatusToZero();
 	}
 
@@ -61,9 +53,5 @@ public class ProductServiceImpl implements ProductService{
 	
 
 	
-=======
-		pdao.deleteById(id);
-	}
->>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 	
 }
