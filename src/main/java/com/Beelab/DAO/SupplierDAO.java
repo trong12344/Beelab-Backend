@@ -9,7 +9,7 @@ import com.Beelab.Entity.Size;
 import com.Beelab.Entity.Supplier;
 
 public interface SupplierDAO extends JpaRepository<Supplier, Integer>{
-	@Query("SELECT p FROM supplier p WHERE p.name=?1")
+	@Query("SELECT p FROM Supplier p WHERE p.name=?1")
 	List<Supplier> findOneByEmail(String email);
 
 

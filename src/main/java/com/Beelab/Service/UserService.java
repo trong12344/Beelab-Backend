@@ -14,10 +14,6 @@ public interface UserService {
 
    public User changePassword(int userId);
 
-   public void transportEmail(String email, String verifyCode);
-
-   User verifyCode();
-
    public User findOneById(int id);
 
    public User findOneByPhone(String phoneNumber);

@@ -17,10 +17,10 @@ public interface CartDAO extends JpaRepository<Cart, Integer> {
 
 	@Transactional
     @Modifying
-    @Query("DELETE FROM Cart c WHERE c.user.id = :userId AND c.product.id = :productId")
+    @Query("DELETE FROM Cart c WHERE c.user.id = :userId AND c.ProductDetail.id = :productId")
     Cart deleteCartByProductId(@Param("userId") int userId, @Param("productId") int productId);
 	
 	
-	 @Query("SELECT c FROM Cart c WHERE c.user.id = :userId AND c.created_at like :currentDateTime")
-	    List<Cart> getCurrentCartByUser(@Param("userId") int userId, @Param("currentDateTime") LocalDateTime currentDateTime);
+//	 @Query("SELECT c FROM Cart c WHERE c.user.id = :userId AND c.created_at like :currentDateTime")
+//	    List<Cart> getCurrentCartByUser(@Param("userId") int userId, @Param("currentDateTime") LocalDateTime currentDateTime);
 }

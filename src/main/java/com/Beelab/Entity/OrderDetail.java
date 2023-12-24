@@ -57,10 +57,6 @@ public class OrderDetail implements Serializable {
     private Date updated_at;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Admin staff;
-
-    @ManyToOne
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 }
