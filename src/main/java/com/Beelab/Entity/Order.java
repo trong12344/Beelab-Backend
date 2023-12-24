@@ -19,6 +19,7 @@ import jakarta.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+<<<<<<< HEAD
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -52,6 +53,26 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	User account;
+=======
+
+@SuppressWarnings("serial")
+@Data
+@Entity
+@Table(name = "Orders")
+public class Order implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
+	String address;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "Createdate")
+	Date createDate = new Date();
+
+	@ManyToOne
+	@JoinColumn(name = "Username")
+	Account account;
+>>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")

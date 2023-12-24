@@ -41,7 +41,11 @@ public class AuthorityServiceImpl implements AuthorityService{
 	public void delete(Integer id) {
 		dao.deleteById(id);
 	}
+<<<<<<< HEAD
 	
 	
 	
+=======
+
+>>>>>>> 32190fa122a1cd1f838700e341b3ee62cafb17d8
 }
