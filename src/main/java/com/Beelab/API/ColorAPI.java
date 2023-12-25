@@ -21,21 +21,25 @@ import com.Beelab.Service.ColorService;
 public class ColorAPI {
 	@Autowired
 	ColorService colorservice;
+
 	@GetMapping
-    public List<Color> getListColor() {
-        return colorservice.getListColor();
-    }
-    @GetMapping("/{id}")
-    public Color getColorById(@PathVariable int id) {
-        return colorservice.findOneById(id);
-    }
-    @PostMapping
-    public Color createColor(@RequestBody Color color) {
-        return colorservice.createColor(color);
-    }
-    @PutMapping("/{id}")
-    public Color updateColor(@PathVariable int id, @RequestBody Color color) {
-        color.setId(id);
-        return colorservice.updateColor(color);
-    }
+	public List<Color> getListColor() {
+		return colorservice.getListColor();
+	}
+
+	@GetMapping("/{id}")
+	public Color getColorById(@PathVariable int id) {
+		return colorservice.findOneById(id);
+	}
+
+	@PostMapping
+	public Color createColor(@RequestBody Color color) {
+		return colorservice.createColor(color);
+	}
+
+	@PutMapping("/{id}")
+	public Color updateColor(@PathVariable int id, @RequestBody Color color) {
+		color.setId(id);
+		return colorservice.updateColor(color);
+	}
 }
