@@ -57,7 +57,16 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		
+		<dependency>
+			<groupId>com.j6a2</groupId>
+			<artifactId>J6.asm2</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.duan</groupId>
+			<artifactId>JavaSpringBoot-3</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

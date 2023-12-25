@@ -16,7 +16,6 @@ SizeDAO cdao;
 		// TODO Auto-generated method stub
 		return cdao .save(size); 
 	}
-
 	
 	public Size updateSize(Integer id) {
 		// TODO Auto-generated method stub
@@ -24,20 +23,17 @@ SizeDAO cdao;
 	}
 
 	public List<Size> getListSize() {
-		// TODO Auto-generated method stub
 		return cdao .findAll();
 	}
 
 	@Override
 	public Size findOneById(int id) {
-		// TODO Auto-generated method stub
 		return cdao.findById(id).get();
 		
 	}
 
 	public Size findOneByName(String name) {
-		// TODO Auto-generated method 
-		return   (Size) cdao.findOneByName(name);
+		return (Size) cdao.findOneByName(name);
 	}
 
 }

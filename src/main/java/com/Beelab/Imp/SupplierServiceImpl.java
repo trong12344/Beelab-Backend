@@ -13,13 +13,11 @@ public class SupplierServiceImpl implements SupplierService {
 SupplierDAO  spdao;
 	@Override
 	public Supplier createSupplier(Supplier supplier) {
-		// TODO Auto-generated method stub
-		return spdao  .save(supplier) ;
+		return spdao .save(supplier) ;
 	}
 
 	@Override
 	public Supplier updateSupplier(int id) {
-		// TODO Auto-generated method stub
 		return spdao .save(updateSupplier(id));
 	}
 

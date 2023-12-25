@@ -19,7 +19,6 @@ ColorDAO cdao;
 	}
 
 	public Color updateColor(Color color) {
-		// TODO Auto-generated method stub
 		return cdao .save(color);
 	}
 
@@ -28,10 +27,9 @@ ColorDAO cdao;
 		// TODO Auto-generated method stub
 		return cdao.findAll();
 	}
-
+       
 	@Override
 	public Color findOneById(int id) {
-		// TODO Auto-generated method stub
 		return cdao.findById(id).get();
 	}
 
