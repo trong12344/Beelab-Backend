@@ -32,6 +32,7 @@ public class Product {
     @Column(name = "id")
     private int id;
 
+
     @Column(name = "supplier_id", columnDefinition = "INT DEFAULT 0")
     private int supplierId;
 

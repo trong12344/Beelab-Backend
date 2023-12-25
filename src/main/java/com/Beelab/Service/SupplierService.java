@@ -17,4 +17,5 @@ public interface SupplierService {
 
 	    public List<Supplier> getListSupplier();
 
+		public void delete(int id);
 }

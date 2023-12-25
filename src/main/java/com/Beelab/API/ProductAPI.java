@@ -33,12 +33,14 @@ public class ProductAPI {
 	
 	@GetMapping()
 	public List<Product> getAll() {
+
 		return productService.findAll();
 	}
 
 	@GetMapping("{id}")
 	public Product getById(@PathVariable("id") Integer id) {
-		return productService.findById(id);
+
+        return productService.findById(id);
 	}
 
 	@PostMapping()
@@ -52,7 +54,7 @@ public class ProductAPI {
 	}
 
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer id) {	
+	public void delete(@PathVariable("id") Integer id) {
 		productService.delete(id);
 	}
 	
