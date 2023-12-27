@@ -1,4 +1,4 @@
-package com.Beelab.API;
+	package com.Beelab.API;
 
 import java.util.List;
 
@@ -20,26 +20,23 @@ import com.Beelab.Service.ColorService;
 @RequestMapping("/rest/color")
 public class ColorAPI {
 	@Autowired
-	ColorService colorservice;
-
+	ColorService colorsevice;
 	@GetMapping
 	public List<Color> getListColor() {
-		return colorservice.getListColor();
+		return colorsevice.getListColor();
 	}
-
 	@GetMapping("/{id}")
 	public Color getColorById(@PathVariable int id) {
-		return colorservice.findOneById(id);
+		return colorsevice.findOneById(id);
 	}
-
 	@PostMapping
 	public Color createColor(@RequestBody Color color) {
-		return colorservice.createColor(color);
+		return colorsevice.createColor(color);
 	}
 
 	@PutMapping("/{id}")
 	public Color updateColor(@PathVariable int id, @RequestBody Color color) {
 		color.setId(id);
-		return colorservice.updateColor(color);
+		return colorsevice.updateColor(color);
 	}
 }

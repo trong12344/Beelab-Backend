@@ -1,14 +1,20 @@
 package com.Beelab.Imp;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.SizeDAO;
+import com.Beelab.Entity.Product;
 import com.Beelab.Entity.Size;
 import com.Beelab.Service.SizeService;
-
-public abstract class SizeServiceImpl implements SizeService {
+@Service
+public  class SizeServiceImpl implements SizeService {
 @Autowired
 SizeDAO cdao;
 	@Override
@@ -36,4 +42,19 @@ SizeDAO cdao;
 		return (Size) cdao.findOneByName(name);
 	}
 
+	@Override
+	public Size updateSize(Size size) {
+		 return cdao.save(size);
+	}
+//	 @Override
+//	    public Page<Size> findAllByPage(int pageNumber, int pageSize) {
+//	        Pageable pageable = (Pageable) PageRequest.of(pageNumber - 1, pageSize);
+//	        return cdao.findAll(pageable);
+//	    }
+//	@Override
+//	public Size updateSize(int id) {
+//		return cdao.save(updateSize(id));
+//	
+//	}
+//	
 }

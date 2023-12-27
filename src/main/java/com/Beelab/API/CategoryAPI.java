@@ -22,33 +22,38 @@ import com.Beelab.Service.CategogyService;
 @RestController
 @RequestMapping("/rest/category")
 public class CategoryAPI {
-
-	@Autowired
-	CategogyService categoryService;
-
-	@GetMapping
-	public List<Category> getAllCategories() {
-		return categoryService.getListCategogy();
-	}
-
+@Autowired
+CategogyService categogyService;
+@GetMapping
+public List<Category> getAllCategories() {
+	return categogyService.getListCategogy();
+}
+//	@Autowired
+//	CategogyService categoryService;
+//
+//	@GetMapping
+//	public List<Category> getAllCategories() {
+//		return categoryService.getListCategogy();
+//	}
+//
 	@GetMapping("/{id}")
 	public Category getCategoryById(@PathVariable int id) {
-		return categoryService.findOneById(id);
+		return categogyService.findOneById(id);
 	}
-
+//
 	@PostMapping
 	public Category createCategory(@RequestBody Category category) {
-		return categoryService.createCategogy(category);
+		return categogyService.createCategogy(category);
 	}
-
+//
 	@PutMapping("{id}")
 	public Category updateCategory(@RequestBody Category category) {
-		return categoryService.updateCategory(category);
+		return categogyService.updateCategory(category);
 	}
-
+//
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteCategoryById(@PathVariable int id) {
-		Category deletedCategory = categoryService.deleteCategoryById(id);
+	public ResponseEntity<java.lang.Object> deleteCategoryById(@PathVariable int id) {
+		Category deletedCategory = categogyService.deleteCategoryById(id);
 		if (deletedCategory != null) {
 			return ResponseEntity.ok("Category  ID " + id + " delete thành công.");
 		} else {

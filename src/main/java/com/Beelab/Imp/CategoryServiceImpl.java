@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.CategoryDAO;
 import com.Beelab.Entity.Category;
 import com.Beelab.Service.CategogyService;
 import java.util.Optional;
-
+@Service
 public class CategoryServiceImpl implements CategogyService {
 	@Autowired
 	CategoryDAO cdao;
