@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.Beelab.DAO.CommentDAO;
-import com.Beelab.Entity.Cart;
 import com.Beelab.Entity.Comment;
 import com.Beelab.Service.CommentService;
 

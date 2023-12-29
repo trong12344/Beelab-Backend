@@ -17,5 +17,7 @@ public interface ColorService {
 
    public Color findOneById(int id);
 
+   //public Color findByName(String name);
+
 
 }

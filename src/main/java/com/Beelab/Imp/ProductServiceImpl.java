@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.ProductDAO;
 import com.Beelab.Entity.Product;
-import com.Beelab.Entity.ProductDetail;
 import com.Beelab.Service.ProductService;
 
 @Service

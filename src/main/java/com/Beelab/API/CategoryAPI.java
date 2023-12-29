@@ -2,18 +2,12 @@ package com.Beelab.API;
 
 import java.util.List;
 
+import com.Beelab.DTO.CategoryDTO;
+import com.Beelab.Response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.Category;
 import com.Beelab.Service.CategogyService;
@@ -24,18 +18,13 @@ import com.Beelab.Service.CategogyService;
 public class CategoryAPI {
 @Autowired
 CategogyService categogyService;
-@GetMapping
-public List<Category> getAllCategories() {
-	return categogyService.getListCategogy();
-}
-//	@Autowired
-//	CategogyService categoryService;
-//
-//	@GetMapping
-//	public List<Category> getAllCategories() {
-//		return categoryService.getListCategogy();
-//	}
-//
+
+	@Autowired
+	CategogyService categoryService;
+	@GetMapping
+	public ResponseEntity<List<CategoryDTO>> getCategoryList() {
+		return ResponseEntity.ok(categoryService.getCategoryList().getBody());
+	}
 	@GetMapping("/{id}")
 	public Category getCategoryById(@PathVariable int id) {
 		return categogyService.findOneById(id);
@@ -59,5 +48,16 @@ public List<Category> getAllCategories() {
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with ID " + id);
 		}
+	}
+	@GetMapping("/search")
+	public ResponseEntity<PageResponse<Category>> getListCategory(
+			@RequestParam(value = "name" , required = false)  String name,
+			@RequestParam(value = "description" , required = false) String description,
+			@RequestParam(value = "product" ,required = false) String product,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size
+			//@RequestParam(value = "status", required = false) SupplierStatus status
+	) {
+		return ResponseEntity.ok(categogyService.search(name,description,product,page,size));
 	}
 }

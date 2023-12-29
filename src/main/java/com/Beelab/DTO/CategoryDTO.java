@@ -1,6 +1,6 @@
-package com.Beelab.dto;
+package com.Beelab.DTO;
 
-public class CategoryDTO {
+public class CategoryDTO <T> {
     private Integer id;
     private String name;
     private String description;
