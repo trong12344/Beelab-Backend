@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.Order;
+import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @SuppressWarnings("serial")
 @Data
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

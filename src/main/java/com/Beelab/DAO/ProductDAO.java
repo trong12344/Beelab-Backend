@@ -2,6 +2,9 @@ package com.Beelab.DAO;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +26,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	  @Modifying
 	  @Query("UPDATE Product p SET p.status = 0 WHERE p.status = 1")
 	  public void updateStatusToZero();
-	
+
+	Page<Product> findAll(Specification<Product> query, Pageable paged);
 }
