@@ -14,6 +14,6 @@ public interface ProductDetailServ {
 	
 	public List<ProductDetailDto> getProductDetail(Integer cid);
 
-	public ProductDetail createProductDetail(CreateProductDetailDto productDetail);
+	public HandleResponse<ProductDetail> createProductDetail(CreateProductDetailDto productDetail);
 	
 }

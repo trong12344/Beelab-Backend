@@ -12,5 +12,5 @@ public interface SizeDAO extends JpaRepository<Size, Integer> {
 
 	
 	@Query("SELECT p FROM Size p WHERE p.name=?1")
-	List<Size> findOneByName(String name);
+	Size findOneByName(String name);
 }

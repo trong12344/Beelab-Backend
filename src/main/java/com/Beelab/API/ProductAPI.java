@@ -2,7 +2,13 @@ package com.Beelab.API;
 
 import java.util.List;
 
+import com.Beelab.Common.Paginated;
+import com.Beelab.dto.*;
+import com.shop.clothing.common.Cqrs.HandleResponse;
+import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +32,17 @@ import com.Beelab.Service.ProductService;
 public class ProductAPI {
 	@Autowired
 	ProductService productService;
-
-	@Autowired
-	ProductDetailServ ProductDetailServ;
-
 	
 	@GetMapping()
-	public List<Product> getAll() {
-
-		return productService.findAll();
+	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
+		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<Paginated<ProductDto>> search(@Valid @ParameterObject SearchProductDto searchProductDto) {
+		return ResponseEntity.ok(productService.search(searchProductDto).orThrow());
+	}
+
 
 	@GetMapping("{id}")
 	public Product getById(@PathVariable("id") Integer id) {
@@ -44,13 +51,14 @@ public class ProductAPI {
 	}
 
 	@PostMapping()
-	public Product create(@RequestBody Product product) {
-		return productService.create(product);
+	public ResponseEntity<Product> create(@RequestBody CreateProductDto product) {
+
+		return ResponseEntity.ok(productService.create(product).get());
 	}
 
-	@PutMapping("{id}")
-	public Product update(@PathVariable("id") Integer id, @RequestBody Product product) {
-		return productService.update(product);
+	@PutMapping()
+	public ResponseEntity<Product> update( @RequestBody UpdateProductDto updateProductDto) {
+		return ResponseEntity.ok(productService.update(updateProductDto).get());
 	}
 
 	@DeleteMapping("{id}")
@@ -58,11 +66,11 @@ public class ProductAPI {
 		productService.delete(id);
 	}
 	
-	@GetMapping("{id}/chi-tiet")
-	public List<ProductDetail>  getProductDetail(@PathVariable("id") Integer id) {
-		return  ProductDetailServ.getProductDetail(id);
-	}
-	
+//	@GetMapping("{id}/chi-tiet")
+//	public List<ProductDetail>  getProductDetail(@PathVariable("id") Integer id) {
+//		return  ProductDetailServ.getProductDetail(id);
+//	}
+//
 	@GetMapping("danh-muc/{id}")
 	public List<Product> findByCategoryId(@PathVariable("id") Integer id) {
 		return productService.findByCategoryId(id);

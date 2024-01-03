@@ -17,8 +17,8 @@ public class CreateProductDetailDto {
     private Integer colorId;
     @NotEmpty(message = "Size không được để trống")
     @NotNull(message = "Size không được để trống")
-    private Integer sizeId;
-    private  Integer quantity=0;
+    private Integer size;
+    private  Integer quantity;
 
 
 }

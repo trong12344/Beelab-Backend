@@ -4,10 +4,11 @@ import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 @Data
 @Builder
-public class CreateProductDto {
+public class CreateProductDto extends ProductDto{
     @NotNull(message = "Supplier ID không được để trống")
     private Integer supplierId;
 
@@ -19,7 +20,11 @@ public class CreateProductDto {
 
     @NotNull(message = "Số lượng không được để trống")
     @PositiveOrZero(message = "Số lượng phải lớn hơn 0")
-    private Integer amount;
+    private double amount;
+
+    @NotEmpty(message = "Ảnh sản phẩm không được để trống")
+    @URL(message = "Ảnh sản phẩm không hợp lệ")
+    private String displayImage;
 
     @NotEmpty(message = "Mô tả không được để trống")
     private String description;

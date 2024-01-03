@@ -1,6 +1,7 @@
 package com.Beelab.Entity;
 
 
+import com.Beelab.Common.AuditableEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product_detail")
-public class ProductDetail {
+public class ProductDetail extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +40,6 @@ public class ProductDetail {
 
     @Column(name = "status", columnDefinition = "INT DEFAULT 0")
     private int status;
-
-    @Column(name = "image_url", columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String image_url;
 
     @Column(name = "sold_quantity", columnDefinition = "INT DEFAULT 0")
     private int sold_quantity;
