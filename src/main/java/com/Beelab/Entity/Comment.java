@@ -1,5 +1,6 @@
 package com.Beelab.Entity;
 
+import com.Beelab.Common.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "comment")
-public class Comment {
+public class Comment extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

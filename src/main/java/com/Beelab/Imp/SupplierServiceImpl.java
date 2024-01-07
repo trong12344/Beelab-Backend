@@ -7,26 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.Beelab.DAO.SupplierDAO;
 import com.Beelab.Entity.Supplier;
 import com.Beelab.Service.SupplierService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SupplierServiceImpl implements SupplierService {
-@Autowired
-SupplierDAO  spdao;
+	@Autowired
+	SupplierDAO spdao;
+
 	@Override
-	public Supplier createSupplier(Supplier supplier) {
+	public Supplier createSupplier( Supplier supplier) {
 		// TODO Auto-generated method stub
-		return spdao  .save(supplier) ;
+		return spdao.save(supplier);
 	}
 
 	@Override
-	public Supplier updateSupplier(int id) {
+	public Supplier updateSupplier(int id ) {
 		// TODO Auto-generated method stub
-		return spdao .save(updateSupplier(id));
+		return spdao.save(updateSupplier(id));
 	}
 
 	@Override
 	public Supplier findOneById(int id) {
 		// TODO Auto-generated method stub
-		return spdao .findById(id).get();
+		return spdao.findById(id).get();
 	}
 
 	@Override
@@ -36,15 +39,19 @@ SupplierDAO  spdao;
 	}
 
 	@Override
-	public Supplier update(Supplier supplier) {
-		// TODO Auto-generated method stub
-		return spdao .save(supplier);
+	public Supplier update(Supplier supplier ) {
+
+		return spdao.save(supplier);
 	}
 
 	@Override
 	public List<Supplier> getListSupplier() {
 		// TODO Auto-generated method stub
-		return spdao .findAll();
+		return spdao.findAll();
+	}
+
+	public void delete(int id){
+		spdao.deleteById(id);
 	}
 
 }

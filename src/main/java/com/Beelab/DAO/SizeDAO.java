@@ -11,6 +11,6 @@ import com.Beelab.Entity.Size;
 public interface SizeDAO extends JpaRepository<Size, Integer> {
 
 	
-	@Query("SELECT p FROM size p WHERE p.name=?1")
-	List<Size> findOneByName(String name);
+	@Query("SELECT p FROM Size p WHERE p.name=?1")
+	Size findOneByName(String name);
 }

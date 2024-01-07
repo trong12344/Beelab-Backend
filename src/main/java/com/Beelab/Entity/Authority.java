@@ -16,7 +16,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 @Entity
-//@Table(name = "Authorities", uniqueConstraints = { @UniqueConstraint(columnNames = { "Username", "Roleid" }) })
+@Table(name = "Authorities")
 public class Authority implements Serializable {
 
 	@Id
@@ -24,8 +24,8 @@ public class Authority implements Serializable {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "admin")
-	private Account account;
+	@JoinColumn(name = "user")
+	private User account;
 
 	
 }

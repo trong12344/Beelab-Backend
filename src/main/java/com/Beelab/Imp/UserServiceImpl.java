@@ -25,9 +25,7 @@ public class UserServiceImpl implements UserService{
 
 
 	public User changePassword(User userChangePasswordDTO, int userId) {
-		// TODO Auto-generated method stub
 		 Optional<User> optionalUser = userDAO.findById(userId);
-
 	        if (optionalUser.isPresent()) {
 	            User existingUser = optionalUser.get();	   
 	            String newPassword = userChangePasswordDTO.getPassword();
@@ -37,10 +35,6 @@ public class UserServiceImpl implements UserService{
 	        } else {
 	            throw new NoSuchElementException("User not found with ID: " + userId);
 	        }
-	}
-
-	@Override
-	public void transportEmail(String email, String verifyCode) {	
 	}
 
 	@Override
@@ -77,11 +71,6 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
-	@Override
-	public User verifyCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	public List<User> getAllUser() {

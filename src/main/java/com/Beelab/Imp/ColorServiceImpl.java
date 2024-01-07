@@ -8,10 +8,12 @@ import org.springframework.http.ProblemDetail;
 import com.Beelab.DAO.ColorDAO;
 import com.Beelab.Entity.Color;
 import com.Beelab.Service.ColorService;
+import org.springframework.stereotype.Service;
 
+@Service
 public abstract class ColorServiceImpl implements ColorService {
-@Autowired
-ColorDAO cdao;
+	@Autowired
+	ColorDAO cdao;
 	@Override
 	public Color createColor(Color color) {
 		// TODO Auto-generated method stub

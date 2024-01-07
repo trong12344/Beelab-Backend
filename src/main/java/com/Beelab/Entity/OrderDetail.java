@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.Beelab.Common.AuditableEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -28,7 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order_detail_bill")
-public class OrderDetail implements Serializable {
+public class OrderDetail extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,10 +56,6 @@ public class OrderDetail implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updated_at;
-
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Admin staff;
 
     @ManyToOne
     @JoinColumn(name = "voucher_id", nullable = false)
