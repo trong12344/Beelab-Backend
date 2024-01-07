@@ -9,5 +9,4 @@ import java.util.List;
 public interface ImageService {
     public HandleResponse<ProductImage> create(createImageDto createImageDto);
 
-    public HandleResponse<List<ProductImage>> getImageByProductId(Integer id);
 }

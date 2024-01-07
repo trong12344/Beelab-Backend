@@ -38,14 +38,17 @@ public class ProductDetailServiceImpl implements ProductDetailServ{
 	@Autowired
 	SizeDAO sdao;
 
-	@Override
-	public List<ProductDetailDto> getProductDetail(Integer cid) {
 
-//		return pddao.getProductDetail(cid);
-		return  null;
+	@Override
+	public HandleResponse<List<ProductDetail>> getProductDetailByProductId(Integer cid) {
+		List<ProductDetail> productDetails = pddao.getProductDetailByProductId(cid);
+		if (productDetails.isEmpty()){
+			return HandleResponse.error("Không tìm thấy sản phảm");
+		}
+		return HandleResponse.ok(productDetails);
 	}
 
-    @Override
+	@Override
     public HandleResponse<ProductDetail> createProductDetail(CreateProductDetailDto createProductDetailDto) {
 		Optional<Product> product = pdao.findById(createProductDetailDto.getProductId());
 		if(product.isEmpty()){

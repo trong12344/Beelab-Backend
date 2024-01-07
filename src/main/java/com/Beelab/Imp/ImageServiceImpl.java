@@ -40,13 +40,4 @@ public class ImageServiceImpl implements ImageService{
         return HandleResponse.ok(productImageBuilder);
     }
 
-    @Override
-    public HandleResponse<List<ProductImage>> getImageByProductId(Integer id) {
-       Product product = pdao.findById(id).orElse(null);
-        if(product == null){
-            return HandleResponse.error("Không tìm thấy sản phẩm");
-        }
-        List<ProductImage> productImage = idao.findALLByProduct(id);
-        return HandleResponse.ok(productImage);
-    }
 }

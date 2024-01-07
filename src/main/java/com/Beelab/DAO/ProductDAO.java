@@ -30,7 +30,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 			"AND  (:categoryIds IS NULL   or p.product.category.id IN :categoryIds)" +
 			" AND (p.product.amount >= :minPrice)" +
 			" AND ( p.product.amount <= :maxPrice)" +
-//			" AND (p.deletedDate IS NULL)" +
+
 			" AND (:colorIds IS NULL   or p.color.id IN :colorIds)" +
 			" AND (:sizes IS NULL   or p.size IN :sizes)",
 			countQuery = "SELECT count(DISTINCT p.product.id) FROM ProductDetail p WHERE " +
@@ -38,7 +38,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 					"AND  (:categoryIds IS NULL   or p.product.category.id IN :categoryIds)" +
 					" AND (p.product.amount >= :minPrice)" +
 					" AND ( p.product.amount <= :maxPrice)" +
-//					" AND (p.deletedDate IS NULL)" +
 					" AND (:colorIds IS NULL   or p.color.id IN :colorIds)" +
 					" AND (:sizes IS NULL   or p.size IN :sizes)"
 

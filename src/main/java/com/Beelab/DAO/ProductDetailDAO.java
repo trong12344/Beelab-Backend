@@ -11,7 +11,7 @@ import com.Beelab.Entity.ProductDetail;
 
 public interface ProductDetailDAO extends JpaRepository<ProductDetail, Integer> {
 	@Query("SELECT p FROM ProductDetail p WHERE p.product.id=?1")
-	List<ProductDetail>  getProductDetail(Integer cid);
+	List<ProductDetail>  getProductDetailByProductId(Integer id);
 
 
 	@Query(value = "select * from product_detail po where po.product_id = ?1 and po.color_id = ?2 order by po.created_date desc limit 1", nativeQuery = true)

@@ -26,6 +26,7 @@ public class HandleResponse<T>{
     }
 
     public static <T>HandleResponse<T> ok( T data){
+
         return HandleResponse.<T>builder().data(data).build();
     }
 

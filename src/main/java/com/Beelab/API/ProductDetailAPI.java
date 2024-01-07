@@ -16,26 +16,19 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/rest/product-detail")
+@RequestMapping("/product-detail")
 public class ProductDetailAPI {
     @Autowired
     ProductDetailServ pddao;
-
-    @Autowired
-    ImageService idao;
 
     @PostMapping("create")
     public ResponseEntity<ProductDetail> create(@RequestBody CreateProductDetailDto createProductDetailDto){
         return ResponseEntity.ok(pddao.createProductDetail(createProductDetailDto).get());
     }
 
-    @PostMapping("create-image")
-    public ResponseEntity<ProductImage> createImage(@RequestBody createImageDto createImageDto){
-        return ResponseEntity.ok(idao.create(createImageDto).get());
+    @GetMapping("{id}")
+    public ResponseEntity<List<ProductDetail>> getProductDetailByProductId(@PathVariable Integer id){
+     return ResponseEntity.ok(pddao.getProductDetailByProductId(id).orThrow());
     }
 
-    @GetMapping("get-image/{id}")
-    public ResponseEntity<List<ProductImage>> getAll(@PathVariable Integer id){
-        return ResponseEntity.ok(idao.getImageByProductId(id).get()).;
-    }
 }

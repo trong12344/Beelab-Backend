@@ -1,10 +1,13 @@
 package com.Beelab.Imp;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
+import com.Beelab.DAO.ProductDetailDAO;
+import com.Beelab.Entity.ProductDetail;
+import com.Beelab.cartDto.AddToCartDto;
+import com.Beelab.cartDto.updateCartDto;
+import com.shop.clothing.common.Cqrs.HandleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,47 +18,65 @@ import com.Beelab.Service.CartService;
 
 @Service
 public class CartServiceImpl implements CartService {
-		@Autowired
-		CartDAO cartDAO;
-	
-	public Cart createCart(Cart Cart) {
-		return cartDAO.save(Cart);
+	@Autowired
+	CartDAO cartDAO;
+	@Autowired
+	ProductDetailDAO productDetailDAO;
+
+	@Override
+	public HandleResponse<Cart> addToCart(AddToCartDto addToCartDto) {
+		Optional<ProductDetail> productDetail = productDetailDAO.findById(addToCartDto.getProductDetailId());
+		if (productDetail.isEmpty()){
+			return HandleResponse.error("Sản phẩm không tồn tại");
+		}
+		if(productDetail.get().getQuantity() < addToCartDto.getQuantity()){
+			return HandleResponse.error("Số lượng không đủ");
+		}
+		Cart cart = Cart.builder().user_id(addToCartDto.getUserId())
+				.ProductDetail(productDetail.get())
+				.quantity(addToCartDto.getQuantity())
+				.build();
+		cartDAO.save(cart);
+		return HandleResponse.ok(cart);
 	}
 
 	@Override
-	public Cart deleteCartByProductId(int userId, int productId) {
-		return cartDAO.deleteCartByProductId(userId, productId);
+	public HandleResponse<Void> removeItemInCart(Integer ProductId) {
+		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(1, ProductId);
+		if (cart.isEmpty()){
+			return HandleResponse.error("Không tìm thấy sản phẩm trong giỏ hàng");
+
+		}
+		cartDAO.delete(cart.get());
+		return HandleResponse.ok();
 	}
+
+
 	@Override
-	public List<Cart> getAllCartByUser(int userId) {
-		return cartDAO.getAllcartByUserId(userId);
+	public HandleResponse<Cart> UpdateCart(updateCartDto updateCartDto) {
+		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(updateCartDto.getUserId(), updateCartDto.getProductDetailId());
+		if (cart.isEmpty()){
+			return HandleResponse.error("Sản phẩm không tồn tại trong giỏ hàng");
+		}
+		int currentStock = cart.get().getProductDetail().getQuantity();
+		if (currentStock< updateCartDto.getNewQuantity()){
+			return HandleResponse.error("Số lượng không đủ");
+		}
+		cart.get().setQuantity(updateCartDto.getNewQuantity());
+		cartDAO.save(cart.get());
+		return HandleResponse.ok(cart.get());
+	}
+
+
+	@Override
+	public HandleResponse<Collection<Cart>> getAllCartByUser(Integer userId) {
+		Collection<Cart> carts = cartDAO.findAllByUserId(userId);
+		return HandleResponse.ok(carts);
 	}
 
 	@Override
 	public Cart findOneById(int id) {
-		
 		return cartDAO .findById(id).get();
 	}
-
-	@Override
-	public Cart update(Cart cart) {
-		
-		return cartDAO .save(cart);
-	}
-
-//	@Override
-//	public List<Cart> getCurrentCartByUser(int userId) {
-//        LocalDate localDateTime = LocalDate.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        String dateString = localDateTime.format(formatter);
-//        LocalDateTime date1 = LocalDateTime.parse(dateString, formatter);
-//
-//
-//		LocalDateTime date = LocalDateTime.now();
-//
-//		return cartDAO.getCurrentCartByUser(userId,date1);
-//	}
-
-	
 
 }

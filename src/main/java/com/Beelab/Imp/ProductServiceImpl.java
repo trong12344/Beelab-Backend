@@ -50,21 +50,22 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public HandleResponse<Paginated<ProductDto>> findAll(getAllProductDto getAllProductDto) {
+	public HandleResponse<Paginated<Product>> findAll(getAllProductDto getAllProductDto) {
 		String sortField = getAllProductDto.getSortField();
 		if (sortField.isBlank()) {
 			sortField = "created_date";
 		}
 		Page<Product> product = pdao.GetAll(getAllProductDto.getPageable(sortField));
 
-		Page<ProductDto> productDto = product.map(Product -> {
-			return modelMapper.map(Product, ProductDto.class);
-		});
-		return HandleResponse.ok(Paginated.of(productDto));
+//		Page<ProductDto> productDto = product.map(Product -> {
+//			return modelMapper.map(Product, ProductDto.class);
+//		});
+		return HandleResponse.ok(Paginated.of(product));
 	}
 
 	@Override
 	public Product findById(Integer id) {
+
 		return pdao.findById(id).get();
 	}
 

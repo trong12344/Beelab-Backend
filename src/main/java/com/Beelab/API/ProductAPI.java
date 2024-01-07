@@ -34,7 +34,7 @@ public class ProductAPI {
 	ProductService productService;
 	
 	@GetMapping()
-	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
+	public ResponseEntity<Paginated<Product>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
 		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
 	}
 
@@ -66,11 +66,11 @@ public class ProductAPI {
 		productService.delete(id);
 	}
 	
-//	@GetMapping("{id}/chi-tiet")
-//	public List<ProductDetail>  getProductDetail(@PathVariable("id") Integer id) {
-//		return  ProductDetailServ.getProductDetail(id);
+//	@GetMapping("{id}")
+//	public ResponseEntity<Product> findById(@PathVariable("id") Integer id) {
+//		return ResponseEntity.ok(productService.findById(id));
 //	}
-//
+////
 	@GetMapping("danh-muc/{id}")
 	public List<Product> findByCategoryId(@PathVariable("id") Integer id) {
 		return productService.findByCategoryId(id);

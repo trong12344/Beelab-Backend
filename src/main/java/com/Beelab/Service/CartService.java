@@ -1,24 +1,28 @@
 package com.Beelab.Service;
 
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
+import com.Beelab.cartDto.AddToCartDto;
+import com.Beelab.cartDto.updateCartDto;
+import com.shop.clothing.common.Cqrs.HandleResponse;
 import org.springframework.stereotype.Service;
 
 import com.Beelab.Entity.Cart;
 
 @Service
 public interface CartService {
-   public Cart createCart(Cart Cart);
+   public HandleResponse<Cart> addToCart(AddToCartDto addToCartDto);
     
-   public Cart deleteCartByProductId(int userId, int productId);
-   
-//   public List<Cart> getCurrentCartByUser(int userId);
-    
-   public List<Cart> getAllCartByUser(int userId);
-    
+   public HandleResponse<Void> removeItemInCart(Integer removeItemsInCartDto);
+
+   public HandleResponse<Cart> UpdateCart(updateCartDto updateCartDto);
+
+   HandleResponse<Collection<Cart>> getAllCartByUser(Integer userId);
+
    public Cart findOneById(int id);
-    
-   public Cart update(Cart cart);
+
 }
 

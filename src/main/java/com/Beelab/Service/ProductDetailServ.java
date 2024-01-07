@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.Beelab.Entity.ProductDetail;
 public interface ProductDetailServ {
 	
-	public List<ProductDetailDto> getProductDetail(Integer cid);
+	public HandleResponse<List<ProductDetail>> getProductDetailByProductId(Integer cid);
 
 	public HandleResponse<ProductDetail> createProductDetail(CreateProductDetailDto productDetail);
 	

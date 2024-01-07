@@ -57,7 +57,6 @@ public class Product extends AuditableEntity {
 	@JoinColumn(name = "category_id")
 	Category category;
 
-
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplierId;
@@ -66,8 +65,8 @@ public class Product extends AuditableEntity {
 	@OneToMany(mappedBy = "product")
 	private List<ProductDetail> ProductDetail;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-//    private List<ProductImage> image;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<ProductImage> image;
 
     
 }

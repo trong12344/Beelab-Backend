@@ -18,6 +18,7 @@ public class ProductDto {
     private Supplier supplier;
     private Category category;
     private String code;
+    private Integer discountPercent;
     private double amount;
     private List<ProductDetailDto> productDetail;
 }
