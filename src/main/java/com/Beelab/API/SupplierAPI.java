@@ -6,62 +6,72 @@ import java.util.Optional;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.Beelab.Entity.Supplier;
+import com.Beelab.dto.supplierdto.*;
 
+import com.Beelab.Service.CommentService;
+import com.Beelab.Service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.Beelab.Entity.Supplier;
+import com.Beelab.DAO.SupplierDAO;
 import com.Beelab.Service.SupplierService;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/supplier")
 public class SupplierAPI {
 	@Autowired
-	SupplierService supplierService;
+	private SupplierService supplierService;
+	private SupplierDAO spDao;
 
-
+	@GetMapping("/search")
+	public ResponseEntity<PageResponse<Supplier>> getListSupplier(
+			@RequestParam(value = "name" , required = false)  String name,
+			@RequestParam(value = "description" , required = false) String description,
+			@RequestParam(value = "phoneNumber" ,required = false) String phoneNumber,
+			@RequestParam(value = "address" ,required = false) String address,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size
+			///@RequestParam(value = "status", required = false) SupplierStatus status
+	) {
+		return ResponseEntity.ok(supplierService.search(name,description,phoneNumber,address,page,size));
+	}
 	@GetMapping
-	public List<Supplier> getAll() {
-
-		return supplierService.getListSupplier();
-
+	public ResponseEntity<List<SupplierDto>> getListSupplier() {
+		return ResponseEntity.ok(supplierService.getListSupplier().getBody());
+	}
+	@GetMapping("/{id}/detail")
+	public ResponseEntity<Supplier> findOneById(@PathVariable("id") int id) {
+		return ResponseEntity.ok(supplierService.findOneById(id));
 	}
 
-	@GetMapping("{id}")
-	public Supplier findOneById(@PathVariable("id") int id) {
-		return supplierService.findOneById(id);
+	@GetMapping("/findemail/{email}")////@requestbody
+	public ResponseEntity<Supplier> findOneByEmail(@RequestBody String email) {
+		return  ResponseEntity.ok (supplierService.findOneByEmail(email));
 	}
-
-	@GetMapping("/email/{email}")
-	public Supplier findOneByEmail(@PathVariable String email) {
-		return supplierService.findOneByEmail(email);
-	}
-
 	@PostMapping
 	public Supplier createSupplier(@RequestBody Supplier supplier) {
 		return supplierService.createSupplier(supplier);
 	}
-
-	@PutMapping("{id}")
-	public Supplier updateSupplier(@PathVariable("id") Integer id, @RequestBody Supplier supplier) {
-		return supplierService.update(supplier);
+	@PutMapping("/{id}/update")
+	public ResponseEntity<Supplier> updateSupplier(@PathVariable("id") Integer id, @RequestBody Supplier supplier) {
+		return ResponseEntity.ok(supplierService.update(supplier));
 	}
-
 	@PutMapping
-	public Supplier update(@RequestBody Supplier supplier) {
-		return supplierService.update(supplier);
+	public ResponseEntity<Supplier> update(@RequestBody Supplier supplier) {
+		return ResponseEntity.ok (supplierService.update(supplier));
 	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> delete(@PathVariable int id) {
+		Supplier deletedSupplier = supplierService.delete(id);
 
+		if (deletedSupplier != null) {
+			return ResponseEntity.ok(deletedSupplier);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+}
 
-	@DeleteMapping("{id}")
-	public void delete(@PathVariable int id) {
-
-		supplierService.delete(id);
-	}}
