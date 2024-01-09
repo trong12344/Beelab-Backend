@@ -3,8 +3,7 @@ package com.Beelab.API;
 import java.util.List;
 
 import com.Beelab.Common.Paginated;
-import com.Beelab.dto.*;
-import com.Beelab.Common.HandleResponse;
+import com.Beelab.dto.productdto.*;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Beelab.Entity.Product;
-import com.Beelab.Entity.ProductDetail;
-import com.Beelab.Service.ProductDetailServ;
 import com.Beelab.Service.ProductService;
 
 

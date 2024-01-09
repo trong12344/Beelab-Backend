@@ -1,9 +1,6 @@
-package com.Beelab.dto;
+package com.Beelab.dto.productdto;
 
 
-import com.Beelab.Common.IRequest;
-import com.Beelab.Common.Paginated;
-import com.Beelab.Common.PaginationRequest;
 import com.Beelab.Entity.Category;
 import com.Beelab.Entity.Supplier;
 import lombok.Data;

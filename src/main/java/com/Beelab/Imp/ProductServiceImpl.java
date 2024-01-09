@@ -8,13 +8,10 @@ import com.Beelab.DAO.CategoryDAO;
 import com.Beelab.DAO.SupplierDAO;
 import com.Beelab.Entity.Category;
 import com.Beelab.Entity.Supplier;
-import com.Beelab.dto.*;
 import com.Beelab.Common.HandleResponse;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.Beelab.dto.productdto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import com.Beelab.DAO.ProductDAO;
@@ -116,11 +113,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void delete(Integer id) {
 		pdao.deleteById(id);
-	}
-
-	public Product create(Product product) {
-
-		return pdao.save(product);
 	}
 
 

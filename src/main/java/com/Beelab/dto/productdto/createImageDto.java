@@ -1,4 +1,4 @@
-package com.Beelab.dto;
+package com.Beelab.dto.productdto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

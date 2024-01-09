@@ -1,4 +1,4 @@
-package com.Beelab.dto;
+package com.Beelab.dto.productdto;
 
 import com.Beelab.Common.IRequest;
 import com.Beelab.Common.Paginated;

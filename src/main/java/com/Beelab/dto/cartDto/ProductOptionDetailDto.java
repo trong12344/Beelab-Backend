@@ -1,7 +1,7 @@
 //package com.Beelab.cartDto;
 //
-//import com.Beelab.dto.ProductDetailDto;
-//import com.Beelab.dto.ProductDto;
+//import com.Beelab.dto.productdto.ProductDetailDto;
+//import com.Beelab.dto.productdto.ProductDto;
 //import lombok.Getter;
 //import lombok.Setter;
 //

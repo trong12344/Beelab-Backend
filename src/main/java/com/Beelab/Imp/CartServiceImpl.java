@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import com.Beelab.DAO.ProductDetailDAO;
 import com.Beelab.Entity.ProductDetail;
-import com.Beelab.cartDto.AddToCartDto;
-import com.Beelab.cartDto.updateCartDto;
+import com.Beelab.dto.cartDto.AddToCartDto;
+import com.Beelab.dto.cartDto.updateCartDto;
 import com.Beelab.Common.HandleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

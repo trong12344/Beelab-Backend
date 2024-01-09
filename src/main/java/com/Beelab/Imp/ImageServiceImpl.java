@@ -3,17 +3,14 @@ package com.Beelab.Imp;
 import com.Beelab.DAO.ImageDAO;
 import com.Beelab.DAO.ProductDAO;
 import com.Beelab.DAO.ProductDetailDAO;
-import com.Beelab.Entity.Product;
 import com.Beelab.Entity.ProductDetail;
 import com.Beelab.Entity.ProductImage;
 import com.Beelab.Service.ImageService;
-import com.Beelab.Service.ProductService;
-import com.Beelab.dto.createImageDto;
+import com.Beelab.dto.productdto.createImageDto;
 import com.Beelab.Common.HandleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

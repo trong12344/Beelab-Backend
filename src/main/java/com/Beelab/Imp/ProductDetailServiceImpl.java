@@ -9,8 +9,7 @@ import com.Beelab.DAO.SizeDAO;
 import com.Beelab.Entity.Color;
 import com.Beelab.Entity.Product;
 import com.Beelab.Entity.Size;
-import com.Beelab.dto.CreateProductDetailDto;
-import com.Beelab.dto.ProductDetailDto;
+import com.Beelab.dto.productdto.CreateProductDetailDto;
 import com.Beelab.Common.HandleResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import com.Beelab.DAO.ProductDetailDAO;
 import com.Beelab.Entity.ProductDetail;
 import com.Beelab.Service.ProductDetailServ;
-import org.springframework.ui.ModelMap;
 
 
 @Service

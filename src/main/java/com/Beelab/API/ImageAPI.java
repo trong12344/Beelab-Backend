@@ -2,12 +2,10 @@ package com.Beelab.API;
 
 import com.Beelab.Entity.ProductImage;
 import com.Beelab.Service.ImageService;
-import com.Beelab.dto.createImageDto;
+import com.Beelab.dto.productdto.createImageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController

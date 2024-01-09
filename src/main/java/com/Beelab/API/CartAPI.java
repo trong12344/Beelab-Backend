@@ -2,17 +2,15 @@
 
 
 import java.util.Collection;
-import java.util.List;
 
-import com.Beelab.cartDto.AddToCartDto;
-import com.Beelab.cartDto.updateCartDto;
+import com.Beelab.dto.cartDto.AddToCartDto;
+import com.Beelab.dto.cartDto.updateCartDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.Cart;
-import com.Beelab.Entity.Product;
 import com.Beelab.Service.CartService;
 
 @CrossOrigin("*")
