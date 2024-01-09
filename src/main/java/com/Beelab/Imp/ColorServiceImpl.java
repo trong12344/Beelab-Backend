@@ -3,15 +3,13 @@ package com.Beelab.Imp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ProblemDetail;
+import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.ColorDAO;
 import com.Beelab.Entity.Color;
 import com.Beelab.Service.ColorService;
-import org.springframework.stereotype.Service;
-
 @Service
-public abstract class ColorServiceImpl implements ColorService {
+public class ColorServiceImpl implements ColorService {
 	@Autowired
 	ColorDAO cdao;
 	@Override
@@ -21,7 +19,6 @@ public abstract class ColorServiceImpl implements ColorService {
 	}
 
 	public Color updateColor(Color color) {
-		// TODO Auto-generated method stub
 		return cdao .save(color);
 	}
 
@@ -33,7 +30,6 @@ public abstract class ColorServiceImpl implements ColorService {
 
 	@Override
 	public Color findOneById(int id) {
-		// TODO Auto-generated method stub
 		return cdao.findById(id).get();
 	}
 

@@ -9,7 +9,7 @@ import com.Beelab.DAO.SupplierDAO;
 import com.Beelab.Entity.Category;
 import com.Beelab.Entity.Supplier;
 import com.Beelab.dto.*;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;

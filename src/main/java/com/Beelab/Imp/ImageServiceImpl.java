@@ -9,7 +9,7 @@ import com.Beelab.Entity.ProductImage;
 import com.Beelab.Service.ImageService;
 import com.Beelab.Service.ProductService;
 import com.Beelab.dto.createImageDto;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

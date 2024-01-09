@@ -7,7 +7,7 @@ import com.Beelab.Service.ImageService;
 import com.Beelab.Service.ProductDetailServ;
 import com.Beelab.dto.CreateProductDetailDto;
 import com.Beelab.dto.createImageDto;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

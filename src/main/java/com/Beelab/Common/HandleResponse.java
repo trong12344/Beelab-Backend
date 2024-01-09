@@ -1,4 +1,4 @@
-package com.shop.clothing.common.Cqrs;
+package com.Beelab.Common;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;

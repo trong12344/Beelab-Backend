@@ -63,5 +63,5 @@ public class SupplierAPI {
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable int id) {
 
-		 supplierService.delete(id);
+		supplierService.delete(id);
 	}}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.Beelab.Common.Paginated;
 import com.Beelab.dto.*;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;

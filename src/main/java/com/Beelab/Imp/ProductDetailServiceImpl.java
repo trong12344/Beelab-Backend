@@ -11,7 +11,7 @@ import com.Beelab.Entity.Product;
 import com.Beelab.Entity.Size;
 import com.Beelab.dto.CreateProductDetailDto;
 import com.Beelab.dto.ProductDetailDto;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

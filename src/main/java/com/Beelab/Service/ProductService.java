@@ -2,6 +2,7 @@ package com.Beelab.Service;
 
 import java.util.List;
 
+import com.Beelab.Common.HandleResponse;
 import com.Beelab.Common.PageResponse;
 
 import com.Beelab.Common.Paginated;
@@ -11,7 +12,6 @@ import com.Beelab.dto.CreateProductDetailDto;
 import com.Beelab.dto.CreateProductDto;
 import com.Beelab.dto.ProductDto;
 import com.Beelab.dto.*;
-import com.shop.clothing.common.Cqrs.HandleResponse;
 
 public interface ProductService {
 	public HandleResponse<Paginated<ProductDto>> search(SearchProductDto searchProductDto);

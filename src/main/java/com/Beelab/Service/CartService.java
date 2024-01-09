@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.Beelab.cartDto.AddToCartDto;
 import com.Beelab.cartDto.updateCartDto;
-import com.shop.clothing.common.Cqrs.HandleResponse;
+import com.Beelab.Common.HandleResponse;
 import org.springframework.stereotype.Service;
 
 import com.Beelab.Entity.Cart;
