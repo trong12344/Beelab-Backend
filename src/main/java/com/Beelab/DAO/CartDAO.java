@@ -9,10 +9,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Beelab.Entity.Cart;
 
+@Repository
 public interface CartDAO extends JpaRepository<Cart, Integer> {
 
     @Query("select c from Cart c where c.user_id = ?1 and c.ProductDetail.id = ?2")

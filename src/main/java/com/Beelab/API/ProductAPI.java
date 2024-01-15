@@ -31,7 +31,7 @@ public class ProductAPI {
 	ProductService productService;
 	
 	@GetMapping()
-	public ResponseEntity<Paginated<Product>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
+	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
 		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
 	}
 

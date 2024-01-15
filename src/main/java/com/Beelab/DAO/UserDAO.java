@@ -15,21 +15,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer> , JpaSpecificationExecutor<User> {
 
 	@Query("SELECT p FROM User p WHERE p.phone_number=?1")
-	User findByPhone(String phoneNumber);
+	Optional<User> findByPhone(String phoneNumber);
 
 	@Query("SELECT p FROM User p WHERE p.full_name=?1")
-	User findByUserName(String fullName);
+	Optional<User> findByFull_name(String fullName);
 
-	@Query("SELECT p FROM User p WHERE p.email like :email")
-	User findByEmail(String email);
+	@Query("SELECT p FROM User p WHERE p.email = ?1")
+	Optional<User> findByEmail(String email);
+
 	@Query("SELECT u FROM User u")
-	List<User> getListUser();
 
 	Page<User> findAll(Specification<User> query, Pageable pageable);
 }

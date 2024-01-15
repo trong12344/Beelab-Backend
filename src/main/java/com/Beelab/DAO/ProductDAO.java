@@ -13,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 import com.Beelab.Entity.Product;
 
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.category.id=?1")
 	List<Product> findByCategoryId(Integer cid);

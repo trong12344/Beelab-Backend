@@ -44,9 +44,9 @@ public class ProductDetail extends AuditableEntity {
     @Column(name = "sold_quantity", columnDefinition = "INT DEFAULT 0")
     private int sold_quantity;
     
-    @JsonIgnore
-	@OneToMany(mappedBy = "productDetail")
-	List<OrderDetail> orderDetails;
+//    @JsonIgnore
+//	@OneToMany(mappedBy = "productDetail")
+//	List<OrderDetail> orderDetails;
     
     @ManyToOne
     @JoinColumn(name = "product_id")

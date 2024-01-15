@@ -55,9 +55,5 @@ public class Voucher {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expired_at", nullable = false)
     private Date expired_at;
-    
-    @JsonIgnore
-	@OneToMany(mappedBy = "voucher")
-	List<OrderDetail> OrderDetail;
 
 }

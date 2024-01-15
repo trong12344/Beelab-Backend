@@ -2,23 +2,26 @@ package com.Beelab.Entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
-@Data
+@Setter
+@Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements UserDetails {
 
 
     @Id
@@ -33,48 +36,69 @@ public class User implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "DATE DEFAULT NULL")
-    private Date birthday;
+    private String address;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String password;
+    private String password_hash;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String phone_number;
-
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String verify_code;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "verify_code_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date verify_code_at;
+    private int phone_number;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String token;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime created_at;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updated_at;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Order> orders;
 
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-//	List<Authority> authorities;
-
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     List<Cart> cart;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<Comment> comment;
-	
-	
+
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "normalized_name")
+    )
+    @JsonIgnore
+    private java.util.List<Role> roles;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

@@ -11,7 +11,7 @@ import com.Beelab.dto.productdto.*;
 public interface ProductService {
 	public HandleResponse<Paginated<ProductDto>> search(SearchProductDto searchProductDto);
 
-	public HandleResponse<Paginated<Product>>  findAll(getAllProductDto dto);
+	public HandleResponse<Paginated<ProductDto>>  findAll(getAllProductDto dto);
 
 	public Product findById(Integer id);
 

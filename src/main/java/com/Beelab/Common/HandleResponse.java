@@ -11,18 +11,18 @@ import org.springframework.web.server.ResponseStatusException;
 public class HandleResponse<T>{
     private T data= null;
     @Getter
-    private String error;
+    private String ErrorMessage, SuccesMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
 
     public  T get(){
         return data;
     }
     public boolean isOk(){
-        return error == null || error.isEmpty();
+        return ErrorMessage == null || ErrorMessage.isEmpty();
     }
 
     public boolean hasError(){
-        return error != null && !error.isEmpty();
+        return ErrorMessage != null && !ErrorMessage.isEmpty();
     }
 
     public static <T>HandleResponse<T> ok( T data){
@@ -35,19 +35,21 @@ public class HandleResponse<T>{
     }
 
     public static <T>HandleResponse<T> error(String error){
-        return HandleResponse.<T>builder().error(error).httpStatus(HttpStatus.BAD_REQUEST).build();
+        return HandleResponse.<T>builder().ErrorMessage(error).httpStatus(HttpStatus.BAD_REQUEST).build();
     }
+    public static <T>HandleResponse<T> SuccesMessage(String mes){
 
+        return HandleResponse.<T>builder().ErrorMessage(mes).httpStatus(HttpStatus.OK).build();
+    }
     public static <T>HandleResponse<T> error(String error, HttpStatus httpStatus){
-        return HandleResponse.<T>builder().error(error).httpStatus(httpStatus).build();
+        return HandleResponse.<T>builder().ErrorMessage(error).httpStatus(httpStatus).build();
     }
 
     public T orThrow(){
-        if (error != null && !error.isEmpty()){
-            throw new ResponseStatusException(httpStatus, error);
+        if (ErrorMessage != null && !ErrorMessage.isEmpty()){
+            throw new ResponseStatusException(httpStatus, ErrorMessage);
         }
-
         return data;
-
     }
+
 }
