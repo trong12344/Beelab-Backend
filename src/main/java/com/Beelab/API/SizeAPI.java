@@ -34,9 +34,15 @@ public class SizeAPI {
         return sizeService.findOneById(id);
     }
 
-    @GetMapping("/name/{name}")
-    public Size getSizeByName(@PathVariable String name) {
-        return sizeService.findOneByName(name);//note
+    @GetMapping("/ten/{name}")
+    public ResponseEntity<Size> getSizeByName(@PathVariable String name) {
+        List<Size> sizes = sizeService.findByName(name);
+        if (!sizes.isEmpty()) {
+            Size size = sizes.get(0);
+            return ResponseEntity.ok(size);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

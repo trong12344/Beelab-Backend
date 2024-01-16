@@ -59,12 +59,18 @@ public class CategoryServiceImpl implements CategogyService {
 		// TODO Auto-generated method stub
 		return cdao.findById(id).get();
 	}
-
 	@Override
-	public Category findOneByName(String name) {
-		return (Category) cdao.findOneByName(name);
+	public List<Category> findByName(String name){
+			return cdao.findByName(name);
 	}
-
+	@Override
+	public Page<Category> getAllCategories(int page, int size) {
+		return cdao.findAll(PageRequest.of(page, size));
+	}
+//	@Override
+//	public Categor findOneByName(String name) {
+//		return (Category) cdao.findOneByName(name);
+//	}
 	@Override
 	public Category deleteCategoryById(int id) {
 		Optional<Category> existingCategoryOptional = cdao.findById(id);

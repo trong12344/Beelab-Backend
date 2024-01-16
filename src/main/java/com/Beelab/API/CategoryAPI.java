@@ -3,8 +3,11 @@ package com.Beelab.API;
 import java.util.List;
 
 import com.Beelab.DTO.CategoryDTO;
+import com.Beelab.Entity.Color;
+import com.Beelab.Entity.Size;
 import com.Beelab.Response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +21,25 @@ import com.Beelab.Service.CategogyService;
 public class CategoryAPI {
 @Autowired
 CategogyService categogyService;
-
-	@Autowired
-	CategogyService categoryService;
+@GetMapping("/tendanhmuc/{name}")
+public ResponseEntity<Category> getCategoryByName(@PathVariable String name) {
+	List<Category> categories = categogyService.findByName(name);
+	if (!categories.isEmpty()) {
+		Category category = categories.get(0);
+		return ResponseEntity.ok(category);
+	} else {
+		return ResponseEntity.notFound().build();
+	}
+}
 	@GetMapping
 	public ResponseEntity<List<CategoryDTO>> getCategoryList() {
-		return ResponseEntity.ok(categoryService.getCategoryList().getBody());
+		return ResponseEntity.ok(categogyService.getCategoryList().getBody());
 	}
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public Category getCategoryById(@PathVariable int id) {
 		return categogyService.findOneById(id);
 	}
-//
+
 	@PostMapping
 	public Category createCategory(@RequestBody Category category) {
 		return categogyService.createCategogy(category);
@@ -48,6 +58,14 @@ CategogyService categogyService;
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with ID " + id);
 		}
+	}
+	@GetMapping("/page/categories")
+	public ResponseEntity<Page<Category>> getCategories(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "1") int size) {
+
+		Page<Category> categories = categogyService.getAllCategories(page, size);
+		return ResponseEntity.ok(categories);
 	}
 	@GetMapping("/search")
 	public ResponseEntity<PageResponse<Category>> getListCategory(

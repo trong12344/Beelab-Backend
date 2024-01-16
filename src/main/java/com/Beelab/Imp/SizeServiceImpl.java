@@ -42,9 +42,16 @@ public  class SizeServiceImpl implements SizeService {
 
 	}
 
+	@Override
 	public Size findOneByName(String name) {
-		return (Size) cdao.findOneByName(name);
+		return cdao.findOneByName(name);
 	}
+
+	@Override
+	public List<Size> findByName(String name) {
+		return cdao.findByName(name);
+	}
+
 
 	@Override
 	public Size updateSize(Size size) {
