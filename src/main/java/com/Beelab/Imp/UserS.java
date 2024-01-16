@@ -11,11 +11,18 @@ import com.Beelab.Entity.User;
 import com.Beelab.dto.User.AddorRemoveRoleDto;
 import com.Beelab.dto.User.RegisterDto;
 import com.Beelab.dto.User.ResetPasswordDto;
+import com.Beelab.dto.User.loginDto;
+import com.Beelab.dto.userdto.ChangePasswordDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +45,8 @@ public class UserS {
     UserDAO userDAO;
     @Autowired
     RoleDAO roleDAO;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -84,7 +93,6 @@ public class UserS {
                 .full_name(registerDto.getFullName())
                 .email(registerDto.getEmail())
                 .password_hash(passwordEncoder.encode(registerDto.getRawPassword()))
-                .phone_number(registerDto.getPhoneNumber())
                 .roles(List.of(roleDAO.findByName("ROLE_CUSTOMER").orElseThrow()))
                 .build();
         return HandleResponse.ok(userDAO.save(user));
@@ -129,5 +137,22 @@ public class UserS {
         var user = userDetailService.loadUserByUsername(email);
         userDetailsService.updatePassword(user, resetPasswordDto.getNewPassword());
         return HandleResponse.SuccesMessage("Đổi mật khẩu thành công");
+    }
+
+    public HandleResponse<Void> changePassword(ChangePasswordDTO changePasswordDTO){
+       return null;
+    }
+
+    public HandleResponse<Void> login(loginDto loginDto){
+        Optional<User> user = userDAO.findByEmail(loginDto.getUsername());
+        if(user.isEmpty()){
+            return HandleResponse.error("Không tìm thấy tài khoản");
+        }
+        if(!passwordEncoder.matches(loginDto.getPassword(), user.get().getPassword_hash())){
+            return HandleResponse.error("Mật khẩu sai");
+        }
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return HandleResponse.SuccesMessage("Đăng nhập thành công");
     }
 }

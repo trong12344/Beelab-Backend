@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service("userDetailsService")
-@Transactional
 public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPasswordService {
     private UserDAO IUserRepository;
     private PasswordEncoder passwordEncoder;
@@ -25,10 +24,6 @@ public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPas
         var useByEmail = IUserRepository.findByEmail(username);
         if (useByEmail.isPresent()) {
             return useByEmail.get();
-        }
-        var userByPhoneNumber = IUserRepository.findByPhone(username);
-        if (userByPhoneNumber.isPresent()) {
-            return userByPhoneNumber.get();
         }
 
         throw new UsernameNotFoundException("User not found");

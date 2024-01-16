@@ -1,6 +1,5 @@
 package com.Beelab.Common;
 
-import jakarta.validation.constraints.Min;
 import lombok.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Sort;
 @NoArgsConstructor
 @Builder
 public class PaginationRequest {
-    @Min(value = 1,message = "Page must be greater than 0")
 
     protected int page = 1;
     protected int pageSize = 10;

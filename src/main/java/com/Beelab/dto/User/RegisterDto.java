@@ -10,8 +10,8 @@ public class RegisterDto {
     private String fullName;
     @NotEmpty(message = "Email không được để trống")
     @Email
-    @NotEmpty
-    private int phoneNumber;
+
+//    private int phoneNumber;
     private String email;
     @NotEmpty(message = "Mật khẩu không được để trống")
     @Length(min = 8,message = "Mật khẩu phải có ít nhất 8 ký tự")
