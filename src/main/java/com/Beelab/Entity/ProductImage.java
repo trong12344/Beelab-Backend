@@ -18,7 +18,7 @@ import lombok.*;
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "url")
 
-public class ProductImage extends AuditableEntity {
+public class ProductImage  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "color")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
-public class Color extends AuditableEntity {
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

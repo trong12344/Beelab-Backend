@@ -2,8 +2,6 @@ package com.Beelab.Service;
 
 import java.util.List;
 
-import com.Beelab.Entity.Authority;
-
 
 public interface AuthorityService {
 	public List<Authority> findAll();

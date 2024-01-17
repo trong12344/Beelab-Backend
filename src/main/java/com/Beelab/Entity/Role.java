@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 @Builder
 @Table
-public class Role extends AuditableEntity implements java.io.Serializable{
+public class Role implements java.io.Serializable{
 
     @Id
     @Column(name = "normalized_name", length = 50,updatable = false)

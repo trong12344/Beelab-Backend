@@ -23,7 +23,7 @@ import lombok.Data;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "category")
-public class Category extends AuditableEntity implements Serializable  {
+public class Category implements Serializable  {
 
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)

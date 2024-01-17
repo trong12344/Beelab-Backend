@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 @Table(name = "product")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Product extends AuditableEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

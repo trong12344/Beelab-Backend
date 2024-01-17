@@ -2,7 +2,6 @@ package com.Beelab.DAO;
 
 import java.util.List;
 
-import com.Beelab.Entity.Authority;
 import com.Beelab.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

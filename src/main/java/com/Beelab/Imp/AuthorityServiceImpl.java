@@ -4,12 +4,10 @@ package com.Beelab.Imp;
 import java.util.List;
 
 import com.Beelab.DAO.UserDAO;
-import com.Beelab.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.AuthorityDAO;
-import com.Beelab.Entity.Authority;
 import com.Beelab.Service.AuthorityService;
 
 
