@@ -9,6 +9,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,33 +34,39 @@ public class ProductAPI {
 	
 	@GetMapping()
 	@Secured("CAN_ORDER")
+//	@PreAuthorize("hasAuthority('ROLE_MANAGER')")
 	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
 		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
 	}
 
 	@GetMapping("/search")
+	@Secured("CAN_ORDER")
 	public ResponseEntity<Paginated<ProductDto>> search(@Valid @ParameterObject SearchProductDto searchProductDto) {
 		return ResponseEntity.ok(productService.search(searchProductDto).orThrow());
 	}
 
 	@GetMapping("{id}")
+	@Secured("CAN_ORDER")
 	public Product getById(@PathVariable("id") Integer id) {
 
         return productService.findById(id);
 	}
 
 	@PostMapping()
+	@Secured("PRODUCT_MANAGEMENT")
 	public ResponseEntity<Product> create(@RequestBody CreateProductDto product) {
 
 		return ResponseEntity.ok(productService.create(product).get());
 	}
 
 	@PutMapping()
+	@Secured("PRODUCT_MANAGEMENT")
 	public ResponseEntity<Product> update( @RequestBody UpdateProductDto updateProductDto) {
 		return ResponseEntity.ok(productService.update(updateProductDto).get());
 	}
 
 	@DeleteMapping("{id}")
+	@Secured("PRODUCT_MANAGEMENT")
 	public void delete(@PathVariable("id") Integer id) {
 		productService.delete(id);
 	}
@@ -70,6 +77,7 @@ public class ProductAPI {
 //	}
 ////
 	@GetMapping("danh-muc/{id}")
+	@Secured("CAN_ORDER")
 	public List<Product> findByCategoryId(@PathVariable("id") Integer id) {
 		return productService.findByCategoryId(id);
 	}

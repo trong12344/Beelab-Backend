@@ -12,6 +12,7 @@ import com.Beelab.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import com.Beelab.Entity.Supplier;
 import com.Beelab.DAO.SupplierDAO;
@@ -26,6 +27,7 @@ public class SupplierAPI {
 	private SupplierDAO spDao;
 
 	@GetMapping("/search")
+	@Secured("SUPPLIER_MANAGEMENT")
 	public ResponseEntity<PageResponse<Supplier>> getListSupplier(
 			@RequestParam(value = "name" , required = false)  String name,
 			@RequestParam(value = "description" , required = false) String description,
@@ -42,15 +44,18 @@ public class SupplierAPI {
 		return ResponseEntity.ok(supplierService.getListSupplier().getBody());
 	}
 	@GetMapping("/{id}/detail")
+	@Secured("SUPPLIER_MANAGEMENT")
 	public ResponseEntity<Supplier> findOneById(@PathVariable("id") int id) {
 		return ResponseEntity.ok(supplierService.findOneById(id));
 	}
 
 	@GetMapping("/findemail/{email}")////@requestbody
+	@Secured("SUPPLIER_MANAGEMENT")
 	public ResponseEntity<Supplier> findOneByEmail(@RequestBody String email) {
 		return  ResponseEntity.ok (supplierService.findOneByEmail(email));
 	}
 	@PostMapping
+	@Secured("SUPPLIER_MANAGEMENT")
 	public Supplier createSupplier(@RequestBody Supplier supplier) {
 		return supplierService.createSupplier(supplier);
 	}
@@ -59,9 +64,11 @@ public class SupplierAPI {
 		return ResponseEntity.ok(supplierService.update(supplier));
 	}
 	@PutMapping
+	@Secured("SUPPLIER_MANAGEMENT")
 	public ResponseEntity<Supplier> update(@RequestBody Supplier supplier) {
 		return ResponseEntity.ok (supplierService.update(supplier));
 	}
+	@Secured("SUPPLIER_MANAGEMENT")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> delete(@PathVariable int id) {
 		Supplier deletedSupplier = supplierService.delete(id);

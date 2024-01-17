@@ -42,6 +42,7 @@ public class AuthorityAPI {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/signin")
+
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody loginDto loginDto){
 
         return ResponseEntity.ok(userS.login(loginDto));

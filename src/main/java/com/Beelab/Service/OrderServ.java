@@ -4,6 +4,7 @@ import com.Beelab.Common.Paginated;
 import com.Beelab.Entity.Order;
 import com.Beelab.Entity.OrderDetail;
 import com.Beelab.dto.orderdto.CreateOrderDto;
+import com.Beelab.dto.orderdto.OrderDto;
 import com.Beelab.dto.orderdto.UpdateStatusOrderDto;
 import com.Beelab.dto.orderdto.getAllOrderDto;
 
@@ -17,5 +18,7 @@ public interface OrderServ{
     HandleResponse<List<OrderDetail>> getDetailByOderId(Integer oderId);
 
     HandleResponse<Order> updateStatusOrder(UpdateStatusOrderDto updateStatusOrderDto);
+
+    HandleResponse<List<OrderDto>> getMyOrder();
 
 }

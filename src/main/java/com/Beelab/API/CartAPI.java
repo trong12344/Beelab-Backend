@@ -8,6 +8,7 @@ import com.Beelab.dto.cartDto.updateCartDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.Cart;
@@ -20,9 +21,9 @@ public class CartAPI {
 	@Autowired
 	CartService cartService;
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Collection<Cart>> getAllCartByUser(@PathVariable int id) {
-		return ResponseEntity.ok(cartService.getAllCartByUser(id).get());
+	@GetMapping("/my-cart")
+	public ResponseEntity<Collection<Cart>> getAllCartByUser() {
+		return ResponseEntity.ok(cartService.getAllCartByUser().orThrow());
 	}
 	
 //	@GetMapping("/current/{id}")

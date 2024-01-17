@@ -15,8 +15,8 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     @Query(nativeQuery = true, value = "select * from orders")
     Page<Order> getAll(Pageable page);
 
-    @Query("select p from Order p where p.account.id =?1")
+    @Query("select p from Order p where p.user.id =?1")
     List<Order> getMyOrder(Integer id);
 
-
+    List<Order> findAllByUserId(int uid);
 }

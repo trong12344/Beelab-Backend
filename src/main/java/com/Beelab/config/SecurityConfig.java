@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -36,12 +39,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         http.getSharedObject(AuthenticationManagerBuilder.class).authenticationProvider(daoAuthenticationProvider());
         http.authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers(HttpMethod.GET, "/admin/**").hasAuthority(Permissions.ADMIN_DASHBOARD.toString());
+//                    authConfig.requestMatchers(HttpMethod.GET, "/products/**").hasAuthority(Permissions.ADMIN_DASHBOARD.toString());
                     authConfig.anyRequest().permitAll();
+
                 }).rememberMe(rememberMe -> {
                     rememberMe.key("remember-me");
                     rememberMe.tokenValiditySeconds(7 * 24 * 60 * 60); // 7 days
@@ -55,8 +60,9 @@ public class SecurityConfig {
                     logout.logoutSuccessUrl("/");
                     logout.deleteCookies("JSESSIONID");
                     logout.invalidateHttpSession(true);
-                })
-                .cors(AbstractHttpConfigurer::disable)
+                }).
+//                .cors(AbstractHttpConfigurer::disable)
+            httpBasic(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }

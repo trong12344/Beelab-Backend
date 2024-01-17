@@ -62,7 +62,7 @@ public class Order {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	User account;
+	User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")

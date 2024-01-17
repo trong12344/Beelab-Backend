@@ -175,13 +175,5 @@ public class UserS {
         return HandleResponse.SuccesMessage("Đăng nhập thành công", HttpStatus.OK);
     }
 
-    public HandleResponse<List<Order>> getMyOrder(){
-        Optional<Integer> currentUser = currentUserService.getCurrentUserId();
-        if(currentUser.isEmpty()){
-            return HandleResponse.error("Bạn chưa đăng nhập");
-        }
-        return HandleResponse.ok(orderDAO.getMyOrder(currentUser.get()));
-
-    }
 
 }

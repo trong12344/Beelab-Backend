@@ -24,7 +24,10 @@ public class BeanUtil {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 
 }

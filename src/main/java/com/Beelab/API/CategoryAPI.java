@@ -8,6 +8,7 @@ import com.Beelab.dto.categorydto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.Category;
@@ -23,25 +24,30 @@ public class CategoryAPI {
     @Autowired
     CategogyService categoryService;
     @GetMapping
+    @Secured("CATEGORY_MANAGEMENT")
     public ResponseEntity<List<CategoryDTO>> getCategoryList() {
         return ResponseEntity.ok(categoryService.getCategoryList().getBody());
     }
     @GetMapping("/{id}")
+    @Secured("CATEGORY_MANAGEMENT")
     public Category getCategoryById(@PathVariable int id) {
         return categogyService.findOneById(id);
     }
     //
     @PostMapping
+    @Secured("CATEGORY_MANAGEMENT")
     public Category createCategory(@RequestBody Category category) {
         return categogyService.createCategogy(category);
     }
     //
     @PutMapping("{id}")
+    @Secured("CATEGORY_MANAGEMENT")
     public Category updateCategory(@RequestBody Category category) {
         return categogyService.updateCategory(category);
     }
     //
     @DeleteMapping("/{id}")
+    @Secured("CATEGORY_MANAGEMENT")
     public ResponseEntity<java.lang.Object> deleteCategoryById(@PathVariable int id) {
         Category deletedCategory = categogyService.deleteCategoryById(id);
         if (deletedCategory != null) {
@@ -51,6 +57,7 @@ public class CategoryAPI {
         }
     }
     @GetMapping("/search")
+    @Secured("CATEGORY_MANAGEMENT")
     public ResponseEntity<PageResponse<Category>> getListCategory(
             @RequestParam(value = "name" , required = false)  String name,
             @RequestParam(value = "description" , required = false) String description,

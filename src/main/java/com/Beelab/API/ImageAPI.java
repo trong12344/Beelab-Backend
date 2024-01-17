@@ -5,6 +5,7 @@ import com.Beelab.Service.ImageService;
 import com.Beelab.dto.productdto.createImageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -15,6 +16,7 @@ public class ImageAPI {
     ImageService idao;
 
     @PostMapping("create")
+    @Secured("PRODUCT_MANAGEMENT")
     public ResponseEntity<ProductImage> createImage(@RequestBody createImageDto createImageDto){
         return ResponseEntity.ok(idao.create(createImageDto).get());
     }

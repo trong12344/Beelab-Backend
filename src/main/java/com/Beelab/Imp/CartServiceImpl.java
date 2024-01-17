@@ -5,23 +5,29 @@ import java.util.Optional;
 
 import com.Beelab.DAO.ProductDetailDAO;
 import com.Beelab.Entity.ProductDetail;
+import com.Beelab.config.ICurrentUserService;
 import com.Beelab.dto.cartDto.AddToCartDto;
 import com.Beelab.dto.cartDto.updateCartDto;
 import com.Beelab.Common.HandleResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.Beelab.DAO.CartDAO;
 import com.Beelab.Entity.Cart;
 import com.Beelab.Service.CartService;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
+@AllArgsConstructor
 public class CartServiceImpl implements CartService {
 	@Autowired
 	CartDAO cartDAO;
 	@Autowired
 	ProductDetailDAO productDetailDAO;
+	private final ICurrentUserService currentUserService;
 
 	@Override
 	public HandleResponse<Cart> addToCart(AddToCartDto addToCartDto) {
@@ -32,8 +38,13 @@ public class CartServiceImpl implements CartService {
 		if(productDetail.get().getQuantity() < addToCartDto.getQuantity()){
 			return HandleResponse.error("Số lượng không đủ");
 		}
-		Cart cart = Cart.builder().user_id(addToCartDto.getUserId())
+		Optional<Integer> currentUserId = currentUserService.getCurrentUserId();
+		if (currentUserId.isEmpty()) {
+			return HandleResponse.error("Bạn chưa đăng nhập");
+		}
+		Cart cart = Cart.builder().user_id(currentUserId.get())
 				.ProductDetail(productDetail.get())
+				.user_id(currentUserId.get())
 				.quantity(addToCartDto.getQuantity())
 				.build();
 		cartDAO.save(cart);
@@ -42,7 +53,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public HandleResponse<Void> removeItemInCart(Integer ProductId) {
-		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(1, ProductId);
+		Optional<Integer> currentUserId = currentUserService.getCurrentUserId();
+		if (currentUserId.isEmpty()) {
+			return HandleResponse.error("Bạn chưa đăng nhập");
+		}
+		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(currentUserId.get(), ProductId);
 		if (cart.isEmpty()){
 			return HandleResponse.error("Không tìm thấy sản phẩm trong giỏ hàng");
 
@@ -54,7 +69,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public HandleResponse<Cart> UpdateCart(updateCartDto updateCartDto) {
-		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(updateCartDto.getUserId(), updateCartDto.getProductDetailId());
+		Optional<Integer> currentUserId = currentUserService.getCurrentUserId();
+		if (currentUserId.isEmpty()) {
+			return HandleResponse.error("Bạn chưa đăng nhập");
+		}
+		Optional<Cart> cart = cartDAO.findByUserIdAndProductOptionId(currentUserId.get(), updateCartDto.getProductDetailId());
 		if (cart.isEmpty()){
 			return HandleResponse.error("Sản phẩm không tồn tại trong giỏ hàng");
 		}
@@ -69,8 +88,12 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public HandleResponse<Collection<Cart>> getAllCartByUser(Integer userId) {
-		Collection<Cart> carts = cartDAO.findAllByUserId(userId);
+	public HandleResponse<Collection<Cart>> getAllCartByUser() {
+		var currentUserId = currentUserService.getCurrentUserId();
+		if (currentUserId.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Bạn chưa đăng nhập");
+		}
+		Collection<Cart> carts = cartDAO.findAllByUserId(currentUserId.get());
 		return HandleResponse.ok(carts);
 	}
 

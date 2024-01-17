@@ -18,7 +18,7 @@ public interface CartService {
 
    public HandleResponse<Cart> UpdateCart(updateCartDto updateCartDto);
 
-   HandleResponse<Collection<Cart>> getAllCartByUser(Integer userId);
+   HandleResponse<Collection<Cart>> getAllCartByUser();
 
    public Cart findOneById(int id);
 

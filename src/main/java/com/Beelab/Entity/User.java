@@ -47,7 +47,7 @@ public class User implements UserDetails {
 
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "user")
 	List<Order> orders;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
