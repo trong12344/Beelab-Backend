@@ -3,6 +3,7 @@ package com.Beelab.Entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.Beelab.Common.AuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import lombok.Data;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "category")
-public class Category implements Serializable {
+public class Category implements Serializable  {
 
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)

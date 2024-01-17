@@ -2,24 +2,30 @@ package com.Beelab.Service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import com.Beelab.Common.HandleResponse;
 
+import com.Beelab.Common.Paginated;
 import com.Beelab.Entity.Product;
+import com.Beelab.dto.productdto.*;
 
 public interface ProductService {
-	public List<Product> findAll();
+	public HandleResponse<Paginated<ProductDto>> search(SearchProductDto searchProductDto);
+
+	public HandleResponse<Paginated<ProductDto>>  findAll(getAllProductDto dto);
 
 	public Product findById(Integer id);
 
 	public List<Product> findByCategoryId(Integer cid);
 
-	public Product create(Product product);
+	public HandleResponse<Product> create(CreateProductDto product);
 
-	public Product update(Product product);
+//	public ProductDetail createProductDetail(CreateProductDetailDto createProductDetailDtoct);
+
+	public HandleResponse<Product> update(UpdateProductDto product);
 
 	public void delete(Integer id);
 	
-	public List<Product> findBySupplierId(Integer cid);
+//	public List<Product> findBySupplierId(Integer cid);
 	
 	
 }

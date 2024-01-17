@@ -2,13 +2,14 @@ package com.Beelab.Service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import com.Beelab.dto.productdto.CreateProductDetailDto;
+import com.Beelab.Common.HandleResponse;
 
 import com.Beelab.Entity.ProductDetail;
 public interface ProductDetailServ {
 	
-	public List<ProductDetail>  getProductDetail(Integer cid);
-	
-	public ProductDetail createProductDetail(ProductDetail productDetail);
+	public HandleResponse<List<ProductDetail>> getProductDetailByProductId(Integer cid);
+
+	public HandleResponse<ProductDetail> createProductDetail(CreateProductDetailDto productDetail);
 	
 }

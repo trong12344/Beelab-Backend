@@ -1,34 +1,26 @@
 package com.Beelab.Entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
-@Data
+@Setter
+@Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-public class User implements Serializable {
-
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,47 +34,92 @@ public class User implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "DATE DEFAULT NULL")
-    private Date birthday;
+    private String address;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String password;
+    private String password_hash;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String phone_number;
-
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String verify_code;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "verify_code_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date verify_code_at;
+    private int phone_number;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String token;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime created_at;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updated_at;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Order> orders;
 
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-//	List<Authority> authorities;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<Cart> cart;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<Comment> comment;
-	
-	
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    List<Cart> cart;
+
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "normalized_name")
+    )
+    @JsonIgnore
+    private java.util.List<Role> roles;
+
+    public List<String> getPermissions() {
+        List<String> permissions = new ArrayList<>();
+        List<Permission> collection = new ArrayList<>();
+        for (Role role : this.getRoles()) {
+            permissions.add(role.getNormalizedName());
+            collection.addAll(role.getPermissions());
+        }
+        for (Permission item : collection) {
+            permissions.add(item.getNormalizedName());
+        } if(this.getRoles().equals("ROLE_EMPLOYEE")){
+            permissions.add("ADMIN_DASHBOARD");
+        }
+        return permissions;
+    }
+
+    private Collection<GrantedAuthority> getGrantedAuthorities(List<String> permissions) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission));
+        }
+        return authorities;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getGrantedAuthorities(getPermissions());
+    }
+
+    @Override
+    public String getPassword() {
+        return password_hash;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

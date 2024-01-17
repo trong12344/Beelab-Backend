@@ -2,7 +2,13 @@ package com.Beelab.API;
 
 import java.util.List;
 
+import com.Beelab.Common.Paginated;
+import com.Beelab.dto.productdto.*;
+import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Beelab.Entity.Product;
-import com.Beelab.Entity.ProductDetail;
-import com.Beelab.Service.ProductDetailServ;
 import com.Beelab.Service.ProductService;
 
 
@@ -26,41 +30,45 @@ import com.Beelab.Service.ProductService;
 public class ProductAPI {
 	@Autowired
 	ProductService productService;
-
-	@Autowired
-	ProductDetailServ ProductDetailServ;
-
 	
 	@GetMapping()
-	public List<Product> getAll() {
-		return productService.findAll();
+	@Secured("CAN_ORDER")
+	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
+		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<Paginated<ProductDto>> search(@Valid @ParameterObject SearchProductDto searchProductDto) {
+		return ResponseEntity.ok(productService.search(searchProductDto).orThrow());
 	}
 
 	@GetMapping("{id}")
 	public Product getById(@PathVariable("id") Integer id) {
-		return productService.findById(id);
+
+        return productService.findById(id);
 	}
 
 	@PostMapping()
-	public Product create(@RequestBody Product product) {
-		return productService.create(product);
+	public ResponseEntity<Product> create(@RequestBody CreateProductDto product) {
+
+		return ResponseEntity.ok(productService.create(product).get());
 	}
 
-	@PutMapping("{id}")
-	public Product update(@PathVariable("id") Integer id, @RequestBody Product product) {
-		return productService.update(product);
+	@PutMapping()
+	public ResponseEntity<Product> update( @RequestBody UpdateProductDto updateProductDto) {
+		return ResponseEntity.ok(productService.update(updateProductDto).get());
 	}
 
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer id) {	
+	public void delete(@PathVariable("id") Integer id) {
 		productService.delete(id);
 	}
 	
-	@GetMapping("{id}/chi-tiet")
-	public List<ProductDetail>  getProductDetail(@PathVariable("id") Integer id) {
-		return  ProductDetailServ.getProductDetail(id);
-	}
-	
+//	@GetMapping("{id}")
+//	public ResponseEntity<Product> findById(@PathVariable("id") Integer id) {
+//		return ResponseEntity.ok(productService.findById(id));
+//	}
+////
 	@GetMapping("danh-muc/{id}")
 	public List<Product> findByCategoryId(@PathVariable("id") Integer id) {
 		return productService.findByCategoryId(id);

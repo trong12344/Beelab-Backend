@@ -1,15 +1,12 @@
 package com.Beelab.Entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.Beelab.Common.AuditableEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,22 +15,22 @@ import com.Beelab.Entity.ProductDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    @Column(name = "supplier_id", columnDefinition = "INT DEFAULT 0")
-    private int supplierId;
 
     @Column(name = "name", columnDefinition = "VARCHAR DEFAULT ''")
     private String name;
@@ -47,6 +44,9 @@ public class Product {
     @Column(name = "amount")
     private double amount;
 
+    @Column(name = "display_image")
+    private String displayImage;
+
     @Column(name = "discount_percent", columnDefinition = "INT DEFAULT 0")
     private int discountPercent;
 
@@ -56,11 +56,20 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	Category category;
-	
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplierId;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductDetail> ProductDetail;
 
-    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<ProductImage> image;
+
+    public double getFinalPrice(){
+        return amount - amount*discountPercent/100;
+    }
 }
 

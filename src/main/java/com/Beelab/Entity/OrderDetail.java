@@ -4,19 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.Beelab.Common.AuditableEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta	.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -27,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "order_detail_bill")
 public class OrderDetail implements Serializable {
 
@@ -34,33 +27,23 @@ public class OrderDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+
+    @Column(name = "order_id", nullable = false)
+    private int order_id;
+
+    @Column(name = "product_detail_id", nullable = false)
+    private int productDetailId;
 
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private int status;
+    @Column(name = "price", nullable = false)
+    private double price;
 
-    @ManyToOne
-    @JoinColumn(name = "product_detail_id", nullable = false)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_detail_id", insertable = false, updatable = false)
     private ProductDetail productDetail;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date created_at;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date updated_at;
-
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Admin staff;
-
-    @ManyToOne
-    @JoinColumn(name = "voucher_id", nullable = false)
-    private Voucher voucher;
 }

@@ -1,21 +1,16 @@
  package com.Beelab.API;
 
 
-import java.util.List;
+import java.util.Collection;
 
+import com.Beelab.dto.cartDto.AddToCartDto;
+import com.Beelab.dto.cartDto.updateCartDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.Cart;
-import com.Beelab.Entity.Product;
 import com.Beelab.Service.CartService;
 
 @CrossOrigin("*")
@@ -26,18 +21,30 @@ public class CartAPI {
 	CartService cartService;
 	
 	@GetMapping("{id}")
-	public List<Cart> getAllCartByUser(@PathVariable int id){
-		return cartService.getAllCartByUser(id);
+	public ResponseEntity<Collection<Cart>> getAllCartByUser(@PathVariable int id) {
+		return ResponseEntity.ok(cartService.getAllCartByUser(id).get());
 	}
 	
-	@GetMapping("/current/{id}")
-	public List<Cart> getCurrentCartByUser(@PathVariable int id){
-		return cartService.getCurrentCartByUser(id);
+//	@GetMapping("/current/{id}")
+//	public List<Cart> getCurrentCartByUser(@PathVariable int id){
+//		return cartService.getCurrentCartByUser(id);
+//	}
+	
+
+	@DeleteMapping("/delete/{pid}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> delete(@PathVariable Integer pid){
+		cartService.removeItemInCart(pid);
+		return ResponseEntity.noContent().build();
 	}
-	
-	
+
 	@PostMapping("/add")
-	public Cart create(@RequestBody Cart cart) {
-		return cartService.createCart(cart);
+	public ResponseEntity<Cart> create(@RequestBody AddToCartDto cart) {
+		return ResponseEntity.ok(cartService.addToCart(cart).orThrow());
+	}
+
+	@PutMapping("/update")
+	public ResponseEntity<Cart> update(@RequestBody updateCartDto cart) {
+		return ResponseEntity.ok(cartService.UpdateCart(cart).orThrow());
 	}
 }

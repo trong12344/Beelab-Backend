@@ -4,20 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.Beelab.Common.AuditableEntity;
+import com.Beelab.Enum.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,18 +23,34 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "orders")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+    @Column(name = "userName", nullable = false)
+    private String userName;
+
+    @Column(name = "userPhoneNumber", nullable = false)
+    private String userPhoneNumber;
+
+    @Column(name = "userEmail", nullable = false)
+    private String userEmail;
+
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String address;
 
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")
-    private int status;
+    @Builder.Default
+    private OrderStatus status = OrderStatus.UNPROCESSED;
+
+    @Column(name = "total_amout", columnDefinition = "DOUBLE DEFAULT 0.0")
+    private double totalAmount;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -53,7 +64,9 @@ public class Order {
 	@JoinColumn(name = "user_id")
 	User account;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id")
 	List<OrderDetail> orderDetails;
+
+
 }

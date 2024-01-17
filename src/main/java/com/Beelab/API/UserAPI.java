@@ -1,22 +1,27 @@
 package com.Beelab.API;
 
+import java.security.SignatureException;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
+import com.Beelab.Common.HandleResponse;
+import com.Beelab.Common.PageResponse;
+import com.Beelab.Imp.UserS;
+import com.Beelab.dto.User.RegisterDto;
+import com.Beelab.dto.User.ResetPasswordDto;
+import com.Beelab.dto.User.loginDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.User;
-import com.Beelab.Service.UserService;
 
 
 
@@ -24,36 +29,24 @@ import com.Beelab.Service.UserService;
 @RestController
 @RequestMapping("/accounts")
 public class UserAPI {
+    @Autowired
+    UserS userS;
 
-	@Autowired
-	UserService userService;
+    @PostMapping("register")
+    public ResponseEntity<User> Register(@RequestBody RegisterDto registerDto){
+        return ResponseEntity.ok(userS.create(registerDto).orThrow());
+    }
 
-	@GetMapping
-	public List<User> getAllUser() {
-		return userService.getAllUser();
-		
-	}
-		
-	@PostMapping(("/create"))
-	public User createUser(@RequestBody User user) {		
-		 LocalDateTime now = LocalDateTime.now();
-	     user.setCreated_at(now);
-	     user.setUpdated_at(now);
-		return userService.create(user);
-		
-	}
-	
-	@PutMapping(("/update/{id}"))
-	public User updateUser(@PathVariable("id") Integer id, @RequestBody User user) {	
-		
-		 LocalDateTime now = LocalDateTime.now();
-		
-	     user.setUpdated_at(now);    
-		return userService.update(user);
-		
-	}
-	
-	
-	
-	
+    @PostMapping("forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestParam String email){
+        return ResponseEntity.ok(userS.forgetPassword(email).orThrow());
+    }
+
+    @GetMapping("reset-password")
+    public HandleResponse<Void> resetPassword(@ParameterObject ResetPasswordDto resetPasswordDto) throws Exception {
+        userS.resetPassword(resetPasswordDto);
+        return HandleResponse.ok();
+    }
+
+
 }

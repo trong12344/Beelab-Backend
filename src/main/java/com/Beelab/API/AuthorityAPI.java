@@ -1,51 +1,49 @@
-//package com.Beelab.API;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.Beelab.Entity.Authority;
-//import com.Beelab.Service.AuthorityService;
-//
-//
-//
-//@CrossOrigin("*")
-//@RestController
-//@RequestMapping("/authorities")
-//public class AuthorityAPI {
-//
-//	@Autowired
-//	AuthorityService authorityService;
-//
-//	@GetMapping
-//	public List<Authority> findAll(@RequestParam("admin") Optional<Boolean> admin) {
-//		if (admin.orElse(false)) {
-//			return authorityService.findAuthoritiesOfAdministrators();
-//		}
-//		return authorityService.findAll();
-//	}
-//
-//	@PostMapping
-//	public Authority post(@RequestBody Authority auth) {
-//		return authorityService.create(auth);
-//	}
-//
-//	@DeleteMapping("{id}")
-//	public void delete(@PathVariable("id") Integer id) {
-//		authorityService.delete(id);
-//		
-//		
-//	}
-//	
-//	
-//}
+package com.Beelab.API;
+
+import com.Beelab.Common.HandleResponse;
+import com.Beelab.Imp.UserS;
+import com.Beelab.dto.User.*;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/auth")
+public class AuthorityAPI {
+    @Autowired
+    PasswordEncoder bCryptPasswordEncoder;
+
+
+    @Autowired
+    UserS userS;
+
+//    @PostMapping("/signin")
+//    public HandleResponse<Void> login(@RequestBody loginDto loginDto){
+//        userS.login(loginDto);
+//        return HandleResponse.ok();
+//    }
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/signin")
+    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody loginDto loginDto){
+
+        return ResponseEntity.ok(userS.login(loginDto));
+    }
+}

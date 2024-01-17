@@ -1,6 +1,7 @@
 package com.Beelab.Entity;
 
 
+import com.Beelab.Common.AuditableEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.Order;
+import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @SuppressWarnings("serial")
 @Data
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,15 +41,12 @@ public class ProductDetail {
     @Column(name = "status", columnDefinition = "INT DEFAULT 0")
     private int status;
 
-    @Column(name = "image_url", columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String image_url;
-
     @Column(name = "sold_quantity", columnDefinition = "INT DEFAULT 0")
     private int sold_quantity;
     
-    @JsonIgnore
-	@OneToMany(mappedBy = "productDetail")
-	List<OrderDetail> orderDetails;
+//    @JsonIgnore
+//	@OneToMany(mappedBy = "productDetail")
+//	List<OrderDetail> orderDetails;
     
     @ManyToOne
     @JoinColumn(name = "product_id")

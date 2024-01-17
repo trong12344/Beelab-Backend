@@ -1,5 +1,6 @@
 package com.Beelab.Entity;
 
+import com.Beelab.Common.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
