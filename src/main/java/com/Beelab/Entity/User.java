@@ -1,9 +1,7 @@
 package com.Beelab.Entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -11,6 +9,7 @@ import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
@@ -22,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,15 +64,38 @@ public class User implements UserDetails {
     @JsonIgnore
     private java.util.List<Role> roles;
 
+    public List<String> getPermissions() {
+        List<String> permissions = new ArrayList<>();
+        List<Permission> collection = new ArrayList<>();
+        for (Role role : this.getRoles()) {
+            permissions.add(role.getNormalizedName());
+            collection.addAll(role.getPermissions());
+        }
+        for (Permission item : collection) {
+            permissions.add(item.getNormalizedName());
+        } if(this.getRoles().equals("ROLE_EMPLOYEE")){
+            permissions.add("ADMIN_DASHBOARD");
+        }
+        return permissions;
+    }
+
+    private Collection<GrantedAuthority> getGrantedAuthorities(List<String> permissions) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission));
+        }
+        return authorities;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getGrantedAuthorities(getPermissions());
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password_hash;
     }
 
     @Override
@@ -84,21 +105,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

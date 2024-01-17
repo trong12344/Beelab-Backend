@@ -25,7 +25,6 @@ public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPas
         if (useByEmail.isPresent()) {
             return useByEmail.get();
         }
-
         throw new UsernameNotFoundException("User not found");
     }
 

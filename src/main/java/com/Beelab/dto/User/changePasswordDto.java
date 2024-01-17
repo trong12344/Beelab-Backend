@@ -9,6 +9,5 @@ public class changePasswordDto {
     @NotEmpty(message = "Mật khẩu cũ không được để trống")
     private String oldPassword;
     @Size(min = 4, message = "Mật khẩu phải có ít nhất 4 ký tự")
-
     private String newPassword;
 }

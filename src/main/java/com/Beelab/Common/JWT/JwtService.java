@@ -25,7 +25,7 @@ public class JwtService {
                 .issuedAt(new java.util.Date(System.currentTimeMillis()))
                 .expiration(new java.util.Date(System.currentTimeMillis() + expirationInMilliSeconds))
                 .signWith(secretKey)
-                .issuer("shop-clothing")
+                .issuer("beelab")
                 .compact();
     }
 

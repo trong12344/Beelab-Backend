@@ -39,12 +39,15 @@ public class HandleResponse<T>{
     }
     public static <T>HandleResponse<T> SuccesMessage(String mes){
 
-        return HandleResponse.<T>builder().ErrorMessage(mes).httpStatus(HttpStatus.OK).build();
+        return HandleResponse.<T>builder().SuccesMessage(mes).httpStatus(HttpStatus.OK).build();
     }
     public static <T>HandleResponse<T> error(String error, HttpStatus httpStatus){
         return HandleResponse.<T>builder().ErrorMessage(error).httpStatus(httpStatus).build();
     }
+    public static <T>HandleResponse<T> SuccesMessage(String mes, HttpStatus status){
 
+        return HandleResponse.<T>builder().SuccesMessage(mes).httpStatus(status).build();
+    }
     public T orThrow(){
         if (ErrorMessage != null && !ErrorMessage.isEmpty()){
             throw new ResponseStatusException(httpStatus, ErrorMessage);

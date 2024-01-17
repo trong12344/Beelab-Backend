@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class ProductAPI {
 	ProductService productService;
 	
 	@GetMapping()
+	@Secured("CAN_ORDER")
 	public ResponseEntity<Paginated<ProductDto>> getAll(@Valid @ParameterObject getAllProductDto getAllProductDto) {
 		return ResponseEntity.ok(productService.findAll(getAllProductDto).orThrow());
 	}
@@ -39,7 +41,6 @@ public class ProductAPI {
 	public ResponseEntity<Paginated<ProductDto>> search(@Valid @ParameterObject SearchProductDto searchProductDto) {
 		return ResponseEntity.ok(productService.search(searchProductDto).orThrow());
 	}
-
 
 	@GetMapping("{id}")
 	public Product getById(@PathVariable("id") Integer id) {

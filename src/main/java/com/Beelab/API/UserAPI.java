@@ -11,10 +11,6 @@ import com.Beelab.Imp.UserS;
 import com.Beelab.dto.User.RegisterDto;
 import com.Beelab.dto.User.ResetPasswordDto;
 import com.Beelab.dto.User.loginDto;
-import com.Beelab.dto.userdto.ChangePasswordDTO;
-import com.Beelab.dto.userdto.ForgetPasswordDTO;
-import com.Beelab.dto.userdto.ResetPasswordDTO;
-import com.Beelab.dto.userdto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springdoc.core.annotations.ParameterObject;
@@ -26,7 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.Beelab.Entity.User;
-import com.Beelab.Service.UserService;
 
 
 

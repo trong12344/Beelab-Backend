@@ -1,18 +1,21 @@
 package com.Beelab.Imp;
 
 
-import com.Beelab.Common.HandleResponse;
+import com.Beelab.Common.*;
 import com.Beelab.Common.JWT.JwtService;
 import com.Beelab.Common.mail.MailService;
+import com.Beelab.DAO.OrderDAO;
 import com.Beelab.DAO.RoleDAO;
 import com.Beelab.DAO.UserDAO;
+import com.Beelab.Entity.Order;
 import com.Beelab.Entity.Role;
 import com.Beelab.Entity.User;
+import com.Beelab.config.ICurrentUserService;
 import com.Beelab.dto.User.AddorRemoveRoleDto;
 import com.Beelab.dto.User.RegisterDto;
 import com.Beelab.dto.User.ResetPasswordDto;
 import com.Beelab.dto.User.loginDto;
-import com.Beelab.dto.userdto.ChangePasswordDTO;
+import com.Beelab.dto.User.changePasswordDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
@@ -48,6 +51,9 @@ public class UserS {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    OrderDAO orderDAO;
+
     private final PasswordEncoder passwordEncoder;
 
     private final JwtService jwtService;
@@ -58,6 +64,7 @@ public class UserS {
 
     private final UserDetailsPasswordService userDetailsService;
 
+    private final ICurrentUserService currentUserService;
 
 
     public HandleResponse<Void> RemoveRoleFormUser(AddorRemoveRoleDto addorRemoveRoleDto){
@@ -139,20 +146,42 @@ public class UserS {
         return HandleResponse.SuccesMessage("Đổi mật khẩu thành công");
     }
 
-    public HandleResponse<Void> changePassword(ChangePasswordDTO changePasswordDTO){
-       return null;
+    public HandleResponse<Void> changePassword(changePasswordDto changePasswordDTO){
+        Optional<Integer> currentUser = currentUserService.getCurrentUserId();
+        if(currentUser.isEmpty()){
+            return HandleResponse.error("Bạn chưa đăng nhập");
+        }
+        User user = userDAO.findById(currentUser.get()).get();
+
+        if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            return HandleResponse.error("Mật khẩu cũ không đúng", HttpStatus.BAD_REQUEST);
+        }
+        user.setPassword_hash(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userDAO.save(user);
+        return HandleResponse.SuccesMessage("Đổi mk thành công");
     }
 
-    public HandleResponse<Void> login(loginDto loginDto){
+    public HandleResponse<Object> login(loginDto loginDto){
         Optional<User> user = userDAO.findByEmail(loginDto.getUsername());
         if(user.isEmpty()){
-            return HandleResponse.error("Không tìm thấy tài khoản");
-        }
+            return HandleResponse.error("Sai username", HttpStatus.NOT_FOUND);        }
+
         if(!passwordEncoder.matches(loginDto.getPassword(), user.get().getPassword_hash())){
-            return HandleResponse.error("Mật khẩu sai");
+            return HandleResponse.error("Sai mật khẩu", HttpStatus.BAD_REQUEST);
+
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return HandleResponse.SuccesMessage("Đăng nhập thành công");
+        return HandleResponse.SuccesMessage("Đăng nhập thành công", HttpStatus.OK);
     }
+
+    public HandleResponse<List<Order>> getMyOrder(){
+        Optional<Integer> currentUser = currentUserService.getCurrentUserId();
+        if(currentUser.isEmpty()){
+            return HandleResponse.error("Bạn chưa đăng nhập");
+        }
+        return HandleResponse.ok(orderDAO.getMyOrder(currentUser.get()));
+
+    }
+
 }
