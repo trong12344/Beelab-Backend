@@ -32,19 +32,16 @@ public class User implements UserDetails {
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    @Column(columnDefinition = "DATE DEFAULT NULL")
     private String address;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String password_hash;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
+    @Column(nullable = false)
     private int phone_number;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String token;
-
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")

@@ -8,6 +8,7 @@ import com.Beelab.dto.orderdto.OrderDto;
 import com.Beelab.dto.orderdto.UpdateStatusOrderDto;
 import com.Beelab.dto.orderdto.getAllOrderDto;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface OrderServ{

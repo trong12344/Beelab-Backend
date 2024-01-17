@@ -70,11 +70,7 @@ public class UserS {
     public HandleResponse<Void> RemoveRoleFormUser(AddorRemoveRoleDto addorRemoveRoleDto){
         User user = userDAO.findById(addorRemoveRoleDto.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         Role role = roleDAO.findById(addorRemoveRoleDto.getRole()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
-        for(Role r : user.getRoles()){
-            if (r.getNormalizedName().equals(role.getNormalizedName())){
-                user.getRoles().remove(role);
-            }
-        }
+        user.getRoles().remove(role);
         userDAO.save(user);
         return HandleResponse.SuccesMessage("Gỡ role thành công");
     }

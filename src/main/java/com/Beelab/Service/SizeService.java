@@ -15,7 +15,8 @@ public interface SizeService {
 
    public Size findOneById(int id);
 
-   public Size findOneByName(String name);
+   Size findOneByName(String name);
+   List<Size> findByName(String name);
 
    public Size updateSize(Size size);
 

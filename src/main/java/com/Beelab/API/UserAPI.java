@@ -8,9 +8,11 @@ import java.util.List;
 import com.Beelab.Common.HandleResponse;
 import com.Beelab.Common.PageResponse;
 import com.Beelab.Imp.UserS;
+import com.Beelab.Service.OrderServ;
 import com.Beelab.dto.User.RegisterDto;
 import com.Beelab.dto.User.ResetPasswordDto;
 import com.Beelab.dto.User.loginDto;
+import com.Beelab.dto.orderdto.OrderDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -32,24 +34,27 @@ import com.Beelab.Entity.User;
 public class UserAPI {
     @Autowired
     UserS userS;
-
+    @Autowired
+    OrderServ orderServ;
     @PostMapping("register")
-    @Secured("CAN_ORDER")
     public ResponseEntity<User> Register(@RequestBody RegisterDto registerDto){
         return ResponseEntity.ok(userS.create(registerDto).orThrow());
     }
 
     @PostMapping("forgot-password")
-    @Secured("CAN_ORDER")
     public ResponseEntity<Void> forgotPassword(@RequestParam String email){
         return ResponseEntity.ok(userS.forgetPassword(email).orThrow());
     }
 
     @GetMapping("reset-password")
-    @Secured("CAN_ORDER")
     public HandleResponse<Void> resetPassword(@ParameterObject ResetPasswordDto resetPasswordDto) throws Exception {
         userS.resetPassword(resetPasswordDto);
         return HandleResponse.ok();
+    }
+
+    @GetMapping("my-order")
+    public ResponseEntity<List<OrderDto>> getMyOrder(){
+        return ResponseEntity.ok(orderServ.getMyOrder().orThrow());
     }
 
 

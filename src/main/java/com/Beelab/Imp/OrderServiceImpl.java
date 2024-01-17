@@ -126,7 +126,9 @@ public class OrderServiceImpl implements OrderServ {
                 () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Cần đăng nhập để thực hiện chức năng này")
         ));
         order.sort((o1, o2) -> o2.getCreated_at().compareTo(o1.getCreated_at()));
-        List<OrderDto> orderDtos = order.stream().map(Order -> mapper.map(Order, OrderDto.class)).toList();
+        List<OrderDto> orderDtos = order.stream().map(
+                Order -> mapper.map(Order, OrderDto.class)).toList();
         return HandleResponse.ok(orderDtos);
+
     }
 }
