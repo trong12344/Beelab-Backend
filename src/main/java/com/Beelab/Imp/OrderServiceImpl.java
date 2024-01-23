@@ -80,8 +80,10 @@ public class OrderServiceImpl implements OrderServ {
 
             }
             productDetail.setQuantity(productDetail.getQuantity() - quantity);
+            productDetail.setSold_quantity(productDetail.getSold_quantity() + quantity);
             pddao.save(productDetail);
         });
+
         return HandleResponse.ok(order);
     }
 
@@ -112,6 +114,7 @@ public class OrderServiceImpl implements OrderServ {
             for (OrderDetail orderItem : order.getOrderDetails()) {
                 ProductDetail productDetail = orderItem.getProductDetail();
                 productDetail.setQuantity(productDetail.getQuantity() + orderItem.getQuantity());
+                productDetail.setSold_quantity(productDetail.getSold_quantity() - orderItem.getQuantity());
                 pddao.save(productDetail);
             }
             return HandleResponse.ok(odao.save(order));

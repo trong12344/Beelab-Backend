@@ -1,6 +1,7 @@
 package com.Beelab.API;
 
 import com.Beelab.Common.HandleResponse;
+import com.Beelab.Entity.User;
 import com.Beelab.Imp.UserS;
 import com.Beelab.dto.User.*;
 import jakarta.validation.Valid;
@@ -42,8 +43,8 @@ public class AuthorityAPI {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody loginDto loginDto){
+    public ResponseEntity<User> authenticateUser(@Valid @RequestBody loginDto loginDto){
 
-        return ResponseEntity.ok(userS.login(loginDto));
+        return ResponseEntity.ok(userS.login(loginDto).get());
     }
 }

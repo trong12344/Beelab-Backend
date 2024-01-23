@@ -11,11 +11,7 @@ import com.Beelab.Entity.Order;
 import com.Beelab.Entity.Role;
 import com.Beelab.Entity.User;
 import com.Beelab.config.ICurrentUserService;
-import com.Beelab.dto.User.AddorRemoveRoleDto;
-import com.Beelab.dto.User.RegisterDto;
-import com.Beelab.dto.User.ResetPasswordDto;
-import com.Beelab.dto.User.loginDto;
-import com.Beelab.dto.User.changePasswordDto;
+import com.Beelab.dto.User.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
@@ -30,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,7 +47,6 @@ public class UserS {
     RoleDAO roleDAO;
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     OrderDAO orderDAO;
 
@@ -96,6 +92,7 @@ public class UserS {
                 .full_name(registerDto.getFullName())
                 .email(registerDto.getEmail())
                 .password_hash(passwordEncoder.encode(registerDto.getRawPassword()))
+                .phone_number(registerDto.getPhoneNumber())
                 .roles(List.of(roleDAO.findByName("ROLE_CUSTOMER").orElseThrow()))
                 .build();
         return HandleResponse.ok(userDAO.save(user));
@@ -157,7 +154,7 @@ public class UserS {
         return HandleResponse.SuccesMessage("Đổi mk thành công");
     }
 
-    public HandleResponse<Object> login(loginDto loginDto){
+    public HandleResponse<User> login(loginDto loginDto){
         Optional<User> user = userDAO.findByEmail(loginDto.getUsername());
         if(user.isEmpty()){
             return HandleResponse.error("Sai username", HttpStatus.NOT_FOUND);        }
@@ -168,8 +165,41 @@ public class UserS {
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return HandleResponse.SuccesMessage("Đăng nhập thành công", HttpStatus.OK);
+
+        return HandleResponse.ok(user.get());
     }
 
+    public HandleResponse<User> updateProfile(UpdateProfileDto updateProfileDto){
+        Optional<Integer> userId = currentUserService.getCurrentUserId();
+        if (userId.isEmpty()) {
+            return HandleResponse.error("Bạn chưa đăng nhập");
+        }
+        Optional<User> user = userDAO.findById(userId.get());
+        if (user.isEmpty()) {
+            return HandleResponse.error("Không tìm thấy người dùng");
+        }
+        var userEntity = user.get();
+        if (!userEntity.getEmail().equals(updateProfileDto.getEmail())) {
+            var userByEmail = userDAO.findByEmail(updateProfileDto.getEmail());
+            if (userByEmail.isPresent()) {
+                return HandleResponse.error("Email đã tồn tại");
+            }
+        }
+        userEntity.setFull_name(updateProfileDto.getFullName());
+        userEntity.setEmail(updateProfileDto.getEmail());
+        userEntity.setAddress(updateProfileDto.getAddress());
+        userEntity.setPhone_number(updateProfileDto.getPhoneNumber());
+        userDAO.save(userEntity);
+        final Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
+        if (oldAuth != null && oldAuth.isAuthenticated()) {
+            var newAuth = new PreAuthenticatedAuthenticationToken(userEntity,
+                    oldAuth.getCredentials(),
+                    oldAuth.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        }
+        return HandleResponse.ok(userEntity);
 
-}
+
+    }
+    }
+

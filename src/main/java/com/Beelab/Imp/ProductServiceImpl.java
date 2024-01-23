@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService{
 	public HandleResponse<Paginated<ProductDto>> findAll(getAllProductDto getAllProductDto) {
 		String sortField = getAllProductDto.getSortField();
 		if (sortField.isBlank()) {
-			sortField = "created_date";
+			sortField = "id";
 		}
 		Page<Product> product = pdao.GetAll(getAllProductDto.getPageable(sortField));
 

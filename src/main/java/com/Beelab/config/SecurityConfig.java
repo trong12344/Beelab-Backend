@@ -2,6 +2,7 @@ package com.Beelab.config;
 
 import com.Beelab.Enum.Permissions;
 import com.Beelab.config.jwt.AuthEntryPointJwt;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,33 +37,28 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+//    @Bean
+//    public JwtTokenProvider tokenProvider() {
+//        return new JwtTokenProvider();
+//    }
+//
+//    @Bean
+//    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+//        return new JwtAuthenticationFilter(tokenProvider());
+//    }
+
+
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+        http.httpBasic(withDefaults());
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         http.getSharedObject(AuthenticationManagerBuilder.class).authenticationProvider(daoAuthenticationProvider());
         http.authorizeHttpRequests(authConfig -> {
-//                    authConfig.requestMatchers(HttpMethod.GET, "/products/**").hasAuthority(Permissions.ADMIN_DASHBOARD.toString());
                     authConfig.anyRequest().permitAll();
-
-                }).rememberMe(rememberMe -> {
-                    rememberMe.key("remember-me");
-                    rememberMe.tokenValiditySeconds(7 * 24 * 60 * 60); // 7 days
-                    rememberMe.tokenRepository(persistentTokenRepository());
-                }).formLogin(login -> {
-                    login.loginPage("/auth/login");
-                    login.failureUrl("/auth/login?error=true");
-                    login.defaultSuccessUrl("/");
-                }).logout(logout -> {
-                    logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-                    logout.logoutSuccessUrl("/");
-                    logout.deleteCookies("JSESSIONID");
-                    logout.invalidateHttpSession(true);
-                }).
-//                .cors(AbstractHttpConfigurer::disable)
-            httpBasic(withDefaults())
+                })
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }

@@ -21,7 +21,9 @@ public class CartAPI {
 	@Autowired
 	CartService cartService;
 	
-	@GetMapping("/my-cart")
+	@GetMapping("/" +
+			"" +
+			"")
 	public ResponseEntity<Collection<Cart>> getAllCartByUser() {
 		return ResponseEntity.ok(cartService.getAllCartByUser().orThrow());
 	}

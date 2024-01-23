@@ -35,8 +35,6 @@ public class Product {
     @Column(name = "name", columnDefinition = "VARCHAR DEFAULT ''")
     private String name;
 
-    @Column(name = "code", columnDefinition = "VARCHAR DEFAULT ''")
-    private String code;
 
     @Column(name = "description", columnDefinition = "VARCHAR DEFAULT ''")
     private String description;
