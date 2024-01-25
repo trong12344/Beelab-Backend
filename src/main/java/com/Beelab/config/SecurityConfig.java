@@ -1,16 +1,14 @@
 package com.Beelab.config;
 
-import com.Beelab.Enum.Permissions;
-import com.Beelab.config.jwt.AuthEntryPointJwt;
-
+import com.Beelab.Common.JWT.AuthEntryPointJwt;
+import com.Beelab.Common.JWT.JwtAuthenticationFilter;
+import com.Beelab.Common.UserDetailServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,9 +18,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -37,22 +35,20 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
-//    @Bean
-//    public JwtTokenProvider tokenProvider() {
-//        return new JwtTokenProvider();
-//    }
-//
-//    @Bean
-//    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-//        return new JwtAuthenticationFilter(tokenProvider());
-//    }
+
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+
+        return new JwtAuthenticationFilter();
+    }
 
 
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic(withDefaults());
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         http.getSharedObject(AuthenticationManagerBuilder.class).authenticationProvider(daoAuthenticationProvider());
@@ -64,7 +60,7 @@ public class SecurityConfig {
     }
 
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     @Bean

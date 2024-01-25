@@ -28,6 +28,15 @@ public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPas
         throw new UsernameNotFoundException("User not found");
     }
 
+
+    public User loadUserById(int id) throws UsernameNotFoundException {
+        var userByid = IUserRepository.findById(id);
+        if (userByid.isPresent()) {
+            return userByid.get();
+        }
+        throw new UsernameNotFoundException("User not found");
+    }
+
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {
         Optional<User> userEntity = IUserRepository.findByEmail(user.getUsername());

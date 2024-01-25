@@ -3,6 +3,7 @@ package com.Beelab.Imp;
 
 import com.Beelab.Common.*;
 import com.Beelab.Common.JWT.JwtService;
+import com.Beelab.Common.JWT.JwtTokenProvider;
 import com.Beelab.Common.mail.MailService;
 import com.Beelab.DAO.OrderDAO;
 import com.Beelab.DAO.RoleDAO;
@@ -51,6 +52,8 @@ public class UserS {
     OrderDAO orderDAO;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final JwtTokenProvider tokenProvider;
 
     private final JwtService jwtService;
 
@@ -154,7 +157,7 @@ public class UserS {
         return HandleResponse.SuccesMessage("Đổi mk thành công");
     }
 
-    public HandleResponse<User> login(loginDto loginDto){
+    public HandleResponse<String> login(loginDto loginDto){
         Optional<User> user = userDAO.findByEmail(loginDto.getUsername());
         if(user.isEmpty()){
             return HandleResponse.error("Sai username", HttpStatus.NOT_FOUND);        }
@@ -165,8 +168,9 @@ public class UserS {
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.generateToken((User) authentication.getPrincipal());
 
-        return HandleResponse.ok(user.get());
+        return HandleResponse.ok(jwt);
     }
 
     public HandleResponse<User> updateProfile(UpdateProfileDto updateProfileDto){

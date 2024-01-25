@@ -13,4 +13,5 @@ import org.springframework.stereotype.Component;
 public class JwtConfig {
     @Value("${jwt.secret}")
     private String secret;
+    private long expired = 604800000L;
 }

@@ -1,4 +1,4 @@
-package com.Beelab.config.jwt;
+package com.Beelab.Common.JWT;
 
 import java.io.IOException;
 import java.util.HashMap;
